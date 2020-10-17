@@ -1,0 +1,12 @@
+Enunciado actividads
+
+1 Formulario en el que se introducen 2 num y con una lista despleglabe se elige la operacion a rtealizar, este formulario llama a un php que realiza la operacion seleccionada (-, +, /, *) y muestra el resultado en pantalla.
+
+2 Repetir los dos ejercicios anteriores  tanto el form como el php
+
+
+if(isset($_post['enviar'])){
+	procesar
+} else {
+	mostrar formulario
+}
