@@ -1,6 +1,9 @@
 
 <?php
 
+    /* Este programa contiene el formulario con los 4 campos donde introduciremos 
+    los nombres posibles para nuestros directorios */
+
     echo "<form action='formulario.php' method='POST'>";
 
     echo "<input type='text' name='opcion 1'> <br> <br>";
