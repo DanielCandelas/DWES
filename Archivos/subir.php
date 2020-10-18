@@ -26,7 +26,7 @@
 		    	mkdir($dir);
 			}  		
 			
-			echo $nombre."-----";
+			echo $nombre."<br><br>";
 			echo $dir."<br><br>";
 
 		    //Comprobamos si el archivo esta en el directorio

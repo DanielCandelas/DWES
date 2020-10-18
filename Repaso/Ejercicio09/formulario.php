@@ -7,13 +7,13 @@
     y el archivo que queremos introducir en el. */
 
 
-    //--VARIABLES--
+//--VARIABLES--
 
     $lista_opciones;    //array asociativo con el nombre del campo que le pasan y su valor(contenido) 
     $lista_final;       //string que va a contener el SELECT
 
 
-    //--CODIGO--
+//--CODIGO--
     
     //Este for() llama a los campos, los limpia y los mete en el array
     for ($i = 1; $i <= 4; $i++) { 
@@ -25,7 +25,7 @@
     $lista_final = lista('directorio', $lista_opciones);
 
 
-    //--HTML DE LA PAGINA--
+//--HTML DE LA PAGINA--
 
     echo "<form action='subir.php' enctype='multipart/form-data' method='POST'>";
     echo "<br>".$lista_final."<br> <br>";
@@ -34,7 +34,7 @@
 
 
 
-    //--FUNCIONES--
+//--FUNCIONES--
     
     function limpiar($campo){   //Esta función limpia la variable que le pasan
         
