@@ -38,7 +38,7 @@
 				for ($i = 1; $i < $npartes-1 ; $i++) { 
 					$nombre .= ".".$partes[$i];
 				}
-				$nombre .= "_".$idUnico.".".$partes[$npartes-1];
+				$nombre .= "_".$id_unico.".".$partes[$npartes-1];
 			}
 		} else {
 			echo "El nombre no tiene extensión";
