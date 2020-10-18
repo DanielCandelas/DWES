@@ -10,7 +10,7 @@
     $nombre;
     $nombre_completo;
     $directorio;
-    $ext = "jpg";
+    $ext = "";
     $resultado;
 
 
@@ -20,19 +20,16 @@
 
         $directorio = $_POST['directorio'];
         $directorio .= "/";
-
         $nombre = $_FILES['archivo']['name'];
 
         crear_directorio($directorio);
-
-        move_uploaded_file($_FILES['archivo']['name'], $directorio.$nombre);
 
         $nombre = estado_archivo($nombre, $directorio);
         
         if ($nombre == false) {
             echo "El archivo tiene que ser del tipo (jpg, png o gif)";
         } else {
-            move_uploaded_file($_FILES['archivo']['name'], $directorio.$nombre);
+            move_uploaded_file($_FILES['archivo']['tmp_name'], $nombre);
             echo "el fichero $nombre se ha subido correctamente";
         }
 
@@ -55,26 +52,28 @@
 
     function estado_archivo($nombre, $directorio){  
 
-        if (is_file($directorio.$nombre)) {    //Vemos si el archivo existe en el directorio
+        $partes = explode('.', $nombre);    //Deconstruimos el nombre y lo metemos en un array
+        $npartes = count($partes);
+        $ext = $partes[$npartes-1];  
 
-            $partes = explode('.', $nombre);    //Deconstruimos el nombre y lo metemos en un array
-            $npartes = count($partes); 
-            $idUnico = uniqid();                  
-            
-            if ($npartes > 0) {                
-                $nombre = $partes[0];
+        if ($npartes > 0) {                
+            $nombre = $partes[0];
 
-                for ($i = 1; $i < $npartes-1; $i++) {   //Contruimos el nombre
-                    $nombre .= ".".$partes[$i];
-                }
-
-                $ext = $partes[$npartes-1];
-                $nombre .= "_".$idUnico.".".$ext;   //Nombre 
-                $nombre_completo = $directorio.$nombre;   //Nombre completo
-            }
-        } else {
-            echo "El archivo no se encuentra en el directorio";
+            for ($i = 1; $i < $npartes-1; $i++) {   //Contruimos el nombre
+                $nombre .= ".".$partes[$i];
+            }                       
         }
+
+        if (is_file($directorio.$nombre.".".$ext)) {    //Vemos si el archivo existe en el directorio            
+           
+            $idUnico = uniqid();    
+            $nombre .= "_".$idUnico.".".$ext;   //Nombre 
+
+        } else {
+            $nombre .= ".".$ext;
+        }
+
+        $nombre_completo = $directorio.$nombre;   //Nombre completo
 
         if (($ext == 'png') || ($ext == 'jpg') || ($ext == 'gif')) {    //Comprobamos extension           
             return $nombre_completo;
