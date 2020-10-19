@@ -47,15 +47,15 @@
     
     function lista($nombre, $arrayOpciones){    //Esta función crea el SELECT
 
-        $lineaI = "<select name='".$nombre."'>";        
-        $lineaX = "";
-        $lineaF = "</select>";
+        $linea = "<select name='".$nombre."'>"; 
 
         foreach ($arrayOpciones as $key => $value) {
-           $lineaX .= "<option value='".$value."' name='".$key."'>".$value."</option>";
+           $linea .= "<option value='".$value."' name='".$key."'>".$value."</option>";
         }
         
-		return $lineaI.$lineaX.$lineaF;            
+        $linea .= "</select>";
+
+		return $linea;            
     }
 
 ?>
