@@ -31,7 +31,7 @@
             require "vistas/mensaje.php";
         }
     
-        $mensaje = "<br> <a href='opciones.php'> Volver a empezar</a>";
+        $mensaje = "<br> <a href='controlador.php'> Volver a empezar</a>";
         require "vistas/mensaje.php";
         
     }else require "vistas/opciones.html";
