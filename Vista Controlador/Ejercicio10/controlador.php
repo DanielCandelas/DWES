@@ -18,7 +18,6 @@
 
 			//Comprobamos si hay algun campo vacio 
 			if (empty($_GET['nombre'])){  
-
 				$error['nombre'] = "Insertar un Nombre / Este campo no puede estra vacio";
 				$errores = True;
 			} else {
@@ -26,15 +25,13 @@
 			}
 
 			if (empty($_GET['apellidos'])){  
-
 				$error['apellidos'] = "Insertar los Apellidos / Este campo no puede estra vacio";
 				$errores = True;
 			} else {
 				$value['apellidos'] = $_GET['apellidos'];
 			}
 
-			if (empty($_GET['domicilio'])){  
-
+			if (empty($_GET['domicilio'])){ 
 				$error['domicilio'] = "Insertar un domicilio / Este campo no puede estra vacio";
 				$errores = True;
 			} else {
@@ -50,9 +47,7 @@
 					require "vistas/mensaje.php";
 				}
 			}
-
 		}
-
 			
 		if (!isset($_GET['enviar']) || $errores){	 //Si NO le damos a Enviar o hay algun ERROR mostramos el formulario.
 

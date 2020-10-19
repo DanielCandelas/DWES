@@ -75,7 +75,7 @@
 
         $nombre_completo = $directorio.$nombre;   //Nombre completo
 
-        if (($ext == 'png') || ($ext == 'jpg') || ($ext == 'gif')) {    //Comprobamos extension           
+        if ((strtoupper($ext) == 'PNG') || (strtoupper($ext) == 'JPG') || (strtoupper($ext) == 'GIF')) {    //Comprobamos extension           
             return $nombre_completo;
         } else {
             return false;

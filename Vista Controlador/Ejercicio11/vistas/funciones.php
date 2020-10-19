@@ -17,7 +17,9 @@
         $linea = "<select name='".$nombre."'>"; 
 
         foreach ($arrayOpciones as $key => $value) {
-        $linea .= "<option value='".$value."' name='".$key."'>".$value."</option>";
+            if (!empty ($value)) {
+                $linea .= "<option value='".$value."' name='".$key."'>".$value."</option>";
+            }           
         }
         
         $linea .= "</select>";
