@@ -15,21 +15,21 @@
         $link = new mysqli('localhost', 'root', '', 'virtualmarket');
 
         if ($link->connect_errno) {
-            echo "Error al conectar con MYSQL ".$link->connect_error;
+
+            $mensaje = "Error al conectar con MYSQL ".$link->connect_error;
+            require "vistas/mensaje.php";
         } else {
 
             $link->set_charset('UTF-8');
 
-            if (existe($dni, $link)) {
-               echo "El usuario ya existe";
+            if (existe($dni)) {
+                $mensaje = "El usuario ya existe";
+                require "vistas/mensaje.php";
             } else {
-                insertar($dni, );
+                insertar($dni, $nombre, $direccion, $email, $pws, $link);
             }
-
         }
-
         $link->close();
-
 
     } else {
         require "vistas/formulario.php";

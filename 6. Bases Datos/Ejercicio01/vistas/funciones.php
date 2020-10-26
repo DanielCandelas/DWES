@@ -5,7 +5,8 @@
 
     // insertar: Recibe todos los campos como parámetros (uno detrás de otro) e inserta el registro en la tabla de clientes.
 
-    function existe($dni, $link){
+    function existe($dni){
+        GLOBAL $link;
 
         $consulta = "SELECT * FROM clientes WHERE dniCliente='$dni'";
 
@@ -16,7 +17,12 @@
 
 
 
-    function insertar(){
+    function insertar($dni, $nombre, $direccion, $email, $pwd, $link){
         
+        $consulta = "INSERT INTO clientes VALUES('$dni', '$nombre', '$direccion', '$email', '$pwd')";
+
+        $resultado = $link->query($consulta);
+
+        return $resultado;
     }
  
