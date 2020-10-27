@@ -28,12 +28,12 @@
                 insertar($dni, $nombre, $direccion, $email, $pws, $link);
                 if (existe($dni)) {
                     $mensaje = "Usuario Introducido correctamente";
-                    
+                    $mensaje .= "<a href='controlador.php'>Volver</a>";
                 } else {
                     $mensaje = "El usuario NO se ha introducido correctamente";
                 }
             }
-            
+
             require "vistas/mensaje.php";
         }
         $link->close();
