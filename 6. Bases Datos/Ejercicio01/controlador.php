@@ -24,10 +24,17 @@
 
             if (existe($dni)) {
                 $mensaje = "El usuario ya existe";
-                require "vistas/mensaje.php";
             } else {
                 insertar($dni, $nombre, $direccion, $email, $pws, $link);
+                if (existe($dni)) {
+                    $mensaje = "Usuario Introducido correctamente";
+                    
+                } else {
+                    $mensaje = "El usuario NO se ha introducido correctamente";
+                }
             }
+            
+            require "vistas/mensaje.php";
         }
         $link->close();
 

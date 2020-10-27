@@ -21,8 +21,6 @@
         
         $consulta = "INSERT INTO clientes VALUES('$dni', '$nombre', '$direccion', '$email', '$pwd')";
 
-        $resultado = $link->query($consulta);
-
-        return $resultado;
+        $link->query($consulta);
     }
  
