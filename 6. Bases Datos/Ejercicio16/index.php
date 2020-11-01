@@ -4,12 +4,10 @@
     require "modelo.php";
 
     $base = new Bd();
-    $datos = Cliente::getAll($base->link);
+    $datos = Cliente::formar_Tabla($base->link);
 
-    require "vistas/mostrar.php";
-
-    $datos->free();
-    $base->link->close(); 
+    $mensaje = $datos;
+    require "vistas/mensaje.php";    
 
     require "vistas/fin.html";
 
