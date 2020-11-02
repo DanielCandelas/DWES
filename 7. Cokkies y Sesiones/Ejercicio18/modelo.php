@@ -63,16 +63,13 @@
         } 
         
         function buscar($link){
-            $consulta = "SELECT * FROM clientes WHERE dniCliente='$this->dni'";
-    
-            $resultado = $link->query($consulta);
-    
+            $consulta = "SELECT * FROM clientes WHERE dniCliente='$this->dni'";    
+            $resultado = $link->query($consulta);    
             return  $resultado->fetch_assoc();
         }
 
         function modificar ($link){
-			$consulta="UPDATE clientes SET nombre='$this->nombre',  direccion='$this->direccion',  email='$this->email', pwd='$this->pwd' WHERE dniCliente='$this->dni'";
-            
+			$consulta="UPDATE clientes SET nombre='$this->nombre',  direccion='$this->direccion',  email='$this->email', pwd='$this->pwd' WHERE dniCliente='$this->dni'";            
             return $link->query($consulta);
 		}
 
