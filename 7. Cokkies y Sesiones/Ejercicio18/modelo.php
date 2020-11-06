@@ -61,6 +61,12 @@
                 require "vistas/mensaje.php";
             }
         } 
+
+        function autenticar ($link){
+			$consulta = "SELECT nombre FROM clientes where dniCliente='$this->dni' and pwd='$this->pwd'";
+			$result = $link->query($consulta);
+			return $result->fetch_assoc();
+		}
         
         function buscar($link){
             $consulta = "SELECT * FROM clientes WHERE dniCliente='$this->dni'";    
@@ -69,7 +75,7 @@
         }
 
         function modificar ($link){
-			$consulta="UPDATE clientes SET nombre='$this->nombre',  direccion='$this->direccion',  email='$this->email', pwd='$this->pwd' WHERE dniCliente='$this->dni'";            
+			$consulta = "UPDATE clientes SET nombre='$this->nombre',  direccion='$this->direccion',  email='$this->email', pwd='$this->pwd' WHERE dniCliente='$this->dni'";            
             return $link->query($consulta);
 		}
 
