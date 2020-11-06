@@ -18,3 +18,32 @@
             return $this->$var;
         }
     }
+
+
+    class productos {
+
+        private $idProducto;
+        private $nombre;
+        private $origen;
+        private $foto;
+        private $marca;
+        private $categoria;
+        private $peso;
+        private $precio;
+
+
+        function __construct($idProducto, $nombre, $origen, $foto, $marca, $categoria, $peso, $precio){
+            $this->idProducto = $idProducto;
+            $this->nombre = $nombre;
+            $this->origen = $origen;
+            $this->foto = $foto;
+            $this->marca = $marca;
+            $this->categoria = $categoria;
+            $this->peso = $peso;
+            $this->precio = $precio;
+        }
+
+
+
+
+    }
