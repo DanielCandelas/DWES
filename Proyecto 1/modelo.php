@@ -47,9 +47,9 @@
             $consulta = "SELECT * FROM productos"; //Hacemos una consulta de todos los productos
             $resultado = $link->query($consulta);
 
-            $mensaje =  "<p id='name'> Bienvenio/a ".$_SESSION['nombre']."</p>
+            $mensaje =  "<p> Bienvenio/a ".$_SESSION['nombre']."</p>
                 <div id='carro'>        
-                    <a href='verCarrito.php'><img src='img/carrito.jpg' width='50px' height='50px'></a><br>
+                    <a href='verCarrito.php'><img src='img/carrito.jpg'></a><br>
                     <p>".$_SESSION['total']."</p>
                 </div>
                 <div id='images'>";
@@ -62,11 +62,12 @@
                 $nombre = $fila['nombre'];
                 $foto = $fila['foto'];
                 $precio = $fila['precio'];
+                $id = $fila['idProducto'];
                 
                 $linea1 .= "<img src='img/$foto'>
                     <p>$nombre</p>
                     <p>$precio</p>
-                    <a href='detalle.php'>Detalle</a>
+                    <a href='detalle.php?id=$id'>Detalle</a> 
                 </div>";
 
                 $mensaje = $linea1;    
@@ -75,6 +76,17 @@
 
             $mensaje = "</div>";    
             require "vistas/mensaje.php";
+        } 
+
+        static function getAll($link){
+            $consulta = "SELECT * FROM productos"; //Hacemos una consulta de todos los productos
+            return $resultado = $link->query($consulta);
+        }
+
+        function dibujarDetalle($link){
+            $consulta = "SELECT * FROM productos WHERE idProducto='".$_GET['id']."'";            
+            $resultado = $link->query($consulta);
+            return $resultado->fetch_assoc();
         } 
     }
 
