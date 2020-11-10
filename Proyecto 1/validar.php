@@ -30,7 +30,7 @@
 
     } else require "vistas/validacion.php";    
 
-    //$base->link->close();
+    $base->link->close();
     //session_destroy();
     require "vistas/fin.html";
 

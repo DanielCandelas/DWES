@@ -6,6 +6,7 @@
     if (isset($_POST['comprar'])){   //SI hemos enviado el formulario, nos redirige a verCarrito.php             
         
         //Ir a verCarrito.php
+        header('Location: verCarrito.php');
 
     }else {   //Si NO hemos enviado el formulario nos lo muestra
         require "modelo.php";
@@ -16,3 +17,7 @@
              require "vistas/dibujarDetalle.php";        
         } 
     }
+
+    $base->link->close();
+    //session_destroy();
+    require "vistas/fin.html";

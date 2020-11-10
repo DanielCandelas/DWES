@@ -10,5 +10,9 @@
     $mensaje = $datos;
     require "vistas/mensaje.php"; 
 
+    $base->link->close();
+    //session_destroy();
+    require "vistas/fin.html";
+
     
 
