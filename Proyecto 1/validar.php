@@ -11,7 +11,7 @@
 
         if($nom = $cli->autenticar($base->link)){   //Mediante un metodo autenticar comprobamos si el usuario y la contraseña son correctas
             
-            if($admin = $cli->soyAdmin($base->link)){  //Comprobamos si el usuario es adminisytrador o no lo es
+            if($admin = $cli->soyAdmin($base->link)){  //Comprobamos si el usuario es administrador o no lo es
                 //Si es administrador hacemos header a CRUD de cliente.
                 
             } else { //Si no es adminstrador creamos 3 variables de sesion y hacemos header a principal.php
@@ -28,8 +28,7 @@
             require "vistas/mensaje.php";
         }
 
-    } else require "vistas/validacion.php";
-    
+    } else require "vistas/validacion.php";    
 
     //$base->link->close();
     //session_destroy();

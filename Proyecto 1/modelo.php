@@ -47,43 +47,10 @@
             $consulta = "SELECT * FROM productos"; //Hacemos una consulta de todos los productos
             $resultado = $link->query($consulta);
 
-            $mensaje =  "<p> Bienvenio/a ".$_SESSION['nombre']."</p>
-                <div id='carro'>        
-                    <a href='verCarrito.php'><img src='img/carrito.jpg'></a><br>
-                    <p>".$_SESSION['total']."</p>
-                </div>
-                <div id='images'>";
-            
-            require "vistas/mensaje.php"; //Mostramos el nombre y el carrito junto al valor de la session total
-            
-            while($fila=$resultado->fetch_assoc()){ //Recorremos el array que hemos formado con los datos recogido en la BD
-                $linea1 = "<div>"; 
-
-                $nombre = $fila['nombre'];
-                $foto = $fila['foto'];
-                $precio = $fila['precio'];
-                $id = $fila['idProducto'];
-                
-                $linea1 .= "<img src='img/$foto'>
-                    <p>$nombre</p>
-                    <p>$precio</p>
-                    <a href='detalle.php?id=$id'>Detalle</a> 
-                </div>";
-
-                $mensaje = $linea1;    
-                require "vistas/mensaje.php";  //Formamos <div> y insertamos la informacion necasaria y los mostramos
-            }
-
-            $mensaje = "</div>";    
-            require "vistas/mensaje.php";
+            require "vistas/dibujarPrincipal.php"; //Construimos principal.            
         } 
 
-        static function getAll($link){
-            $consulta = "SELECT * FROM productos"; //Hacemos una consulta de todos los productos
-            return $resultado = $link->query($consulta);
-        }
-
-        function dibujarDetalle($link){
+        function productoDetalle($link){  //Nos devuelve todos los datos del producto seleccionado.
             $consulta = "SELECT * FROM productos WHERE idProducto='".$_GET['id']."'";            
             $resultado = $link->query($consulta);
             return $resultado->fetch_assoc();
@@ -108,13 +75,13 @@
             $this->administrador = $administrador;
         }        
 
-        function autenticar ($link){
+        function autenticar ($link){  //Autentica que el dni y la pwd metidos son correctos. Y devuelve el nombre correspondiente a la pwd y Dni.
 			$consulta = "SELECT nombre FROM clientes where dniCliente='$this->dni' and pwd='$this->pwd'";
 			$resultado = $link->query($consulta);
 			return $resultado->fetch_assoc();
         }
         
-        function soyAdmin ($link){
+        function soyAdmin ($link){  //Con este metodo verificamos si el Cliente es admin o no 
             $consulta = "SELECT administrador FROM clientes WHERE dniCliente='$this->dni' and pwd='$this->pwd'";
             $resultado = $link->query($consulta);
 
@@ -124,4 +91,8 @@
                 }          
             }    
         }
+    }
+
+    class Carrito{
+
     }
