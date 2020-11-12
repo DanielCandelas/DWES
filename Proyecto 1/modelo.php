@@ -95,4 +95,49 @@
 
     class Carrito{
 
+        private $id;
+        private $nombre_producto;
+        private $precio;
+        private $cantidad;        
+        private $total;
+
+        
+        //function __construct1(){}
+
+        function __construct($id, $nombre_producto, $precio, $cantidad, $total){
+            $this->id = $id;
+            $this->nombre_producto = $nombre_producto;
+            $this->precio = $precio;
+            $this->cantidad = $cantidad;
+            $this->total = $total;           
+        }
+
+        function anadirProducto(){
+            $_SESSION['id'][$_SESSION['total']] = $_POST['id'];
+            $_SESSION['nombre_producto'][$_SESSION['total']] = $_POST['nombre_producto'];
+            $_SESSION['precio'][$_SESSION['total']] = $_POST['precio'];
+            $_SESSION['cantidad'][$_SESSION['total']] = $_POST['cantidad'];
+            $_SESSION['total']++;            
+        }
+
+        function dibujarCarro(){
+
+            $suma_total = 0;
+
+            $mensaje = "<table> <tr> <th>Id</th> <th>Nombre</th> <th>Precio</th> <th>Cantidad</th> <th>Importe</th> </tr>";
+
+            if ($_SESSION['total'] > 0) {
+                for($i = 0; $i < $_SESSION['total']; $i++){  
+                    $importe = $_SESSION['cantidad'][$i]*$_SESSION['precio'][$i];              
+                    $mensaje .= "<tr> <td>".$_SESSION['id'][$i]."</td> <td>".$_SESSION['nombre_producto'][$i]."</td> <td>".$_SESSION['precio'][$i]."</td> <td>".$_SESSION['cantidad'][$i]."</td> <td>".$importe."</td> </tr>";
+                    $suma_total += $importe;
+                }
+            }
+
+            $mensaje .= "<tr> <td></td> <td></td> <td></td> <td>TOTAL</td> <td>$suma_total</td></tr>";
+            $mensaje .= "</table><br><a href=''><button>Procesar Pedido</button></a> <a href='principal.php'><button>Seguir Comprando</button></a>";
+
+            require "vistas/mensaje.php";  
+        }
+
     }

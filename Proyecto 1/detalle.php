@@ -14,7 +14,7 @@
         $product = new Productos($_GET['id'],'','','','','','','');
     
         if($aux = $product->productoDetalle($base->link)){ 
-             require "vistas/dibujarDetalle.php";        
+            require "vistas/dibujarDetalle.php";        
         } 
     }
 

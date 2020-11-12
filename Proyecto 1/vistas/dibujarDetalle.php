@@ -5,9 +5,9 @@ echo "<p> Bienvenio/a ".$_SESSION['nombre']."</p><br>";
 
 echo "<div id='detalle'>";
     echo "<div id='imagenDetalle'><img src='img/".$aux['foto']."' width='200px' height='200px'></div>";
-    echo "<div id='formulario'><form action='' method='POST'>";
+    echo "<div id='formulario'><form action='verCarrito.php' method='POST'>";
         echo "<br> <input type='text' name='id' hidden value='".$_GET['id']."'>".$_GET['id']."<br/>";
-        echo "<br> <input type='text' name='nombre' hidden value='".$aux['nombre']."'><b>".$aux['nombre']."</b><br/><br>";
+        echo "<br> <input type='text' name='nombre_producto' hidden value='".$aux['nombre']."'><b>".$aux['nombre']."</b><br/><br>";
         echo "<p>".$aux['origen']."</p>";
         echo "<p>".$aux['marca']."</p> ";
         echo "<p>".$aux['categoria']."</p>";
