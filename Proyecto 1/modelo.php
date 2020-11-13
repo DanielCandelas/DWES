@@ -176,20 +176,8 @@
         }
 
         function insertarLineasPedido($link){
-            $idPedido = $this->idPedido;
-            
-            $consulta = "";
-
-            for($i = 0; $i < $_SESSION['total']; $i++){ 
-                $nlinea = $i + 1;
-                $idProducto = $_SESSION['id'][$i];
-                $cantidad = $_SESSION['cantidad'][$i];   
-                $consulta .= "INSERT INTO lineaspedidos VALUES ($idPedido, $nlinea, $idProducto, $cantidad)"; 
-                $link->query($consulta);  
-                echo $i;                             
-            }
-
-            return "true";
+            $consulta = "INSERT INTO lineaspedidos VALUES ($this->idPedido, $this->nlinea, $this->idProducto, $this->cantidad)"; 
+            return $link->query($consulta); 
         }
 
         function dibujarCarro(){

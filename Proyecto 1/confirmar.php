@@ -15,7 +15,13 @@
     $pedidos = new Pedidos($id, $_SESSION['dni'], '', '', '');    
 
     $pedidos->insertarPedido($base->link);
-    $pedidos->insertarLineasPedido($base->link);
+
+    for($i = 0; $i < $_SESSION['total']; $i++){ 
+        $nlinea = $i + 1;
+        $lineaProducto = new Pedidos($id, $_SESSION['dni'], $nlinea, $_SESSION['id'][$i], $_SESSION['cantidad'][$i]); 
+        $lineaProducto->insertarLineasPedido($base->link);
+    }
+
     $pedidos->dibujarCarro();
 
 
