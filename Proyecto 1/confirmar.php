@@ -8,14 +8,18 @@
     $mensaje = "<p> Bienvenio/a ".$_SESSION['nombre']."</p><p>El siguiente pedido a sido registrado</p> <br>";
     require "vistas/mensaje.php";
 
+    $aux = new Pedidos('', '', '', '', '');  //Objeto pedidos auxiliar para calcular el id del nuevo pedido
+    $id = $aux->calcularId($base->link);
+    $id++;
+
+    $pedidos = new Pedidos($id, $_SESSION['dni'], '', '', '');    
+
+    $pedidos->insertarPedido($base->link);
+    $pedidos->insertarLineasPedido($base->link);
+    $pedidos->dibujarCarro();
 
 
-
-
-
-    
-    
-    //$base->link->close();
+    $base->link->close();
     session_destroy();
     require "vistas/fin.html";
 

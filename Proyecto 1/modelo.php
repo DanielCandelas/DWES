@@ -143,11 +143,58 @@
     class Pedidos {
 
         private $idPedido;
-        private $fecha;
         private $dniCliente;
+        private $nlinea;
+        private $idProducto;
+        private $cantidad; 
+
+        function __construct($idPedido, $dniCliente, $nlinea, $idProducto, $cantidad){
+            $this->idPedido = $idPedido;
+            $this->dniCliente = $dniCliente;
+            $this->nlinea = $nlinea;
+            $this->idProducto = $idProducto;
+            $this->cantidad = $cantidad;
+        }
+
+        function calcularId($link){
+            $consulta = "SELECT idPedido FROM pedidos";
+            $resultado = $link->query($consulta);
+
+            //recorremos el array fila que contiene los id que hemos consegudio con la consulta y devolvemos el mayor
+            while ($fila = $resultado->fetch_assoc()){
+                foreach ($fila as $value) {
+                    $id_mayor = $value;
+                }		
+            }
+            return $id_mayor;             
+        }
+
+        function insertarPedido($link){
+            $consulta =  "INSERT INTO pedidos VALUES ($this->idPedido, CURDATE(), '', '', '', '', $this->dniCliente)";
+            return $link->query($consulta);              
+        }
+
+        function insertarLineasPedido($link){
+            $nlinea = 1;
+
+            for($i = 0; $i < $_SESSION['total']; $i++){ 
+                $idProducto = $_SESSION['id'][$i];
+                $cantidad = $_SESSION['cantidad'][$i];                
+                $consulta = "INSERT INTO lineaspedido VALUES ($this->idPedido, $nlinea, $idProducto, $cantidad)";
+                $link->query($consulta);
+                $nlinea++;                
+            }
+
+            /*
+            if ($consulta) {
+                return "Nuevos registros ingresados correctamente";
+            } else {
+                return "Error al insertar";
+            }
+            */
+        }
 
         function dibujarCarro(){
-
             $suma_total = 0;
             $mensaje = "<table> <tr> <th>Id</th> <th>Nombre</th> <th>Precio</th> <th>Cantidad</th> <th>Importe</th> </tr>";
 
@@ -158,10 +205,8 @@
                     $suma_total += $importe;
                 }
             }
-
             $mensaje .= "<tr> <td></td> <td></td> <td></td> <td>TOTAL</td> <td>$suma_total</td></tr>";
             $mensaje .= "</table><br><a href='validar.php'><button>Terminar</button></a>";
-
             require "vistas/mensaje.php";  
         }
 
