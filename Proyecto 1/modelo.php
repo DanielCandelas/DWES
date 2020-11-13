@@ -95,23 +95,29 @@
 
     class Carrito {
 
-        private $id;
+        private $idProducto;
         private $nombre_producto;
         private $precio;
         private $cantidad;        
         private $total;
 
 
-        function __construct($id, $nombre_producto, $precio, $cantidad, $total){
-            $this->id = $id;
+        function __construct($idProducto, $nombre_producto, $precio, $cantidad, $total){
+            $this->idProducto = $idProducto;
             $this->nombre_producto = $nombre_producto;
             $this->precio = $precio;
             $this->cantidad = $cantidad;
             $this->total = $total;           
         }
 
+        function __set($property, $value){
+            if(property_exists($this, $property)) {
+                $this->$property = $value;
+            }
+        }
+
         function anadirProducto(){
-            $_SESSION['id'][$_SESSION['total']] = $_POST['id'];
+            $_SESSION['idProducto'][$_SESSION['total']] = $_POST['idProducto'];
             $_SESSION['nombre_producto'][$_SESSION['total']] = $_POST['nombre_producto'];
             $_SESSION['precio'][$_SESSION['total']] = $_POST['precio'];
             $_SESSION['cantidad'][$_SESSION['total']] = $_POST['cantidad'];
@@ -127,7 +133,7 @@
             if ($_SESSION['total'] > 0) {
                 for($i = 0; $i < $_SESSION['total']; $i++){  
                     $importe = $_SESSION['cantidad'][$i]*$_SESSION['precio'][$i];              
-                    $mensaje .= "<tr> <td>".$_SESSION['id'][$i]."</td> <td>".$_SESSION['nombre_producto'][$i]."</td> <td>".$_SESSION['precio'][$i]."</td> <td>".$_SESSION['cantidad'][$i]."</td> <td>".$importe."</td> </tr>";
+                    $mensaje .= "<tr> <td>".$_SESSION['idProducto'][$i]."</td> <td>".$_SESSION['nombre_producto'][$i]."</td> <td>".$_SESSION['precio'][$i]."</td> <td>".$_SESSION['cantidad'][$i]."</td> <td>".$importe."</td> </tr>";
                     $suma_total += $importe;
                 }
             }
@@ -154,6 +160,12 @@
             $this->nlinea = $nlinea;
             $this->idProducto = $idProducto;
             $this->cantidad = $cantidad;
+        }
+
+        function __set($property, $value){
+            if(property_exists($this, $property)) {
+                $this->$property = $value;
+            }
         }
 
         function calcularId($link){
@@ -187,7 +199,7 @@
             if ($_SESSION['total'] > 0) {
                 for($i = 0; $i < $_SESSION['total']; $i++){  
                     $importe = $_SESSION['cantidad'][$i]*$_SESSION['precio'][$i];              
-                    $mensaje .= "<tr> <td>".$_SESSION['id'][$i]."</td> <td>".$_SESSION['nombre_producto'][$i]."</td> <td>".$_SESSION['precio'][$i]."</td> <td>".$_SESSION['cantidad'][$i]."</td> <td>".$importe."</td> </tr>";
+                    $mensaje .= "<tr> <td>".$_SESSION['idProducto'][$i]."</td> <td>".$_SESSION['nombre_producto'][$i]."</td> <td>".$_SESSION['precio'][$i]."</td> <td>".$_SESSION['cantidad'][$i]."</td> <td>".$importe."</td> </tr>";
                     $suma_total += $importe;
                 }
             }
