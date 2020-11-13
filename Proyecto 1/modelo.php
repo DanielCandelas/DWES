@@ -93,7 +93,7 @@
         }
     }
 
-    class Carrito{
+    class Carrito {
 
         private $id;
         private $nombre_producto;
@@ -101,8 +101,6 @@
         private $cantidad;        
         private $total;
 
-        
-        //function __construct1(){}
 
         function __construct($id, $nombre_producto, $precio, $cantidad, $total){
             $this->id = $id;
@@ -135,7 +133,34 @@
             }
 
             $mensaje .= "<tr> <td></td> <td></td> <td></td> <td>TOTAL</td> <td>$suma_total</td></tr>";
-            $mensaje .= "</table><br><a href=''><button>Procesar Pedido</button></a> <a href='principal.php'><button>Seguir Comprando</button></a>";
+            $mensaje .= "</table><br><a href='confirmar.php'><button>Procesar Pedido</button></a> <a href='principal.php'><button>Seguir Comprando</button></a>";
+
+            require "vistas/mensaje.php";  
+        }
+
+    }
+
+    class Pedidos {
+
+        private $idPedido;
+        private $fecha;
+        private $dniCliente;
+
+        function dibujarCarro(){
+
+            $suma_total = 0;
+            $mensaje = "<table> <tr> <th>Id</th> <th>Nombre</th> <th>Precio</th> <th>Cantidad</th> <th>Importe</th> </tr>";
+
+            if ($_SESSION['total'] > 0) {
+                for($i = 0; $i < $_SESSION['total']; $i++){  
+                    $importe = $_SESSION['cantidad'][$i]*$_SESSION['precio'][$i];              
+                    $mensaje .= "<tr> <td>".$_SESSION['id'][$i]."</td> <td>".$_SESSION['nombre_producto'][$i]."</td> <td>".$_SESSION['precio'][$i]."</td> <td>".$_SESSION['cantidad'][$i]."</td> <td>".$importe."</td> </tr>";
+                    $suma_total += $importe;
+                }
+            }
+
+            $mensaje .= "<tr> <td></td> <td></td> <td></td> <td>TOTAL</td> <td>$suma_total</td></tr>";
+            $mensaje .= "</table><br><a href='validar.php'><button>Terminar</button></a>";
 
             require "vistas/mensaje.php";  
         }

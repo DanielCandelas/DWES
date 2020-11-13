@@ -4,7 +4,6 @@
 
     require "vistas/inicio.html";
     require "modelo.php";
-    //$base = new Bd(); 
 
     $carro = new Carrito('', '', '', '', $_SESSION['total']);
     $mensaje = "<p> Bienvenio/a ".$_SESSION['nombre']."</p><br>";
@@ -21,6 +20,4 @@
         $carro->dibujarCarro();
     }   
 
-    //$base->link->close();
-    //session_destroy();
     require "vistas/fin.html";
