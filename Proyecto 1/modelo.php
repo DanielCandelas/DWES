@@ -170,28 +170,19 @@
         }
 
         function insertarPedido($link){
+            $idPedido = $this->idPedido;
             $consulta =  "INSERT INTO pedidos VALUES ($this->idPedido, CURDATE(), '', '', '', '', $this->dniCliente)";
             return $link->query($consulta);              
         }
 
         function insertarLineasPedido($link){
-            $nlinea = 1;
 
-            for($i = 0; $i < $_SESSION['total']; $i++){ 
-                $idProducto = $_SESSION['id'][$i];
-                $cantidad = $_SESSION['cantidad'][$i];                
-                $consulta = "INSERT INTO lineaspedido VALUES ($this->idPedido, $nlinea, $idProducto, $cantidad)";
-                $link->query($consulta);
-                $nlinea++;                
-            }
+            
+        }
 
-            /*
-            if ($consulta) {
-                return "Nuevos registros ingresados correctamente";
-            } else {
-                return "Error al insertar";
-            }
-            */
+        function insertar($link){
+            $consulta =  "INSERT INTO lineaspedidos VALUES ($idPedido, $nlinea, $idProducto, $cantidad)"; 
+            return $link->query($consulta); 
         }
 
         function dibujarCarro(){
