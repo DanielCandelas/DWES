@@ -1,0 +1,99 @@
+
+#contenedor{
+    width: 1120px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    align-content: center;
+}
+
+#cabecera{
+    background-color: teal;
+    height: 90px;
+    width: 1060px;
+    color: white;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    padding: 30px;      
+}
+
+#cabecera div{    
+    background-color: rgb(3, 184, 184);
+    height: 25px;
+    width: 200px;
+    color: white;    
+    text-align: center;
+    font-size: 20px;
+    float: right;
+    border: 1px solid white;
+    border-radius: 10px;
+}
+
+
+#clientes{
+    background-color: teal;
+    height: 70px;
+    width: 300px;    
+    color: white;
+    text-align: center;
+    font-size: 20px;
+    float: left;
+}
+
+#pedidos{
+    background-color: rgb(50, 65, 65);
+    height: 70px;
+    width: 770px;        
+    color: white;
+    text-align: left;
+    font-size: 20px;
+    float: left;
+    padding-left: 50px;
+}
+
+#clientes2{
+    background-color: rgb(50, 65, 65);
+    height: 70px;
+    width: 300px;    
+    color: white;
+    text-align: center;
+    font-size: 20px;
+    float: left;
+}
+
+#clientes3{
+    background-color: rgb(50, 65, 65);
+    height: 70px;
+    width: 570px; 
+    float: left;
+}
+
+#pedidos2{
+    background-color: teal;
+    height: 70px;
+    width: 200px;        
+    color: white;
+    text-align: left;
+    font-size: 20px;
+    float: left;
+    padding-left: 50px;
+}
+
+#pie{
+    background-color: teal;
+    height: 10px;
+    width: 1100px;
+    color: white;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    padding: 10px; 
+    text-align: center;
+}
+
+.clear{
+    clear: left;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+}
