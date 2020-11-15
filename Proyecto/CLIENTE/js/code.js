@@ -1,4 +1,8 @@
+var aux;
+
 window.onload = function () {
+
+    
 
     //CLIENTE
     $(".modalNuevoCliente").hide();
@@ -22,7 +26,6 @@ window.onload = function () {
 
     $(document).on('click', "#borrarCliente", function(){
         var fila_borrar = $(this).parent().parent();//$(this) es el boton que ha generado el evento, me interesa la fila
-        console.log(fila_borrar);   
         var objeto_dato = { 
             dni:fila_borrar.find('.dniCli').text(), //dentro de la fila, busco el td de clase dni, y me quedo con el texto
         };
@@ -46,18 +49,32 @@ window.onload = function () {
     });
 
     
-    //PEDIDOS
+//PEDIDOS
     $(".modalNuevoPedido").hide();
+    listar_pedidos(aux);
+    relleno_select();
 
-    listar_pedidos();
-
-    $("#nuevoPedido").click(function () {
-        console.log("entro");
-        relleno_select();
+    $("#nuevoPedido").click(function () {        
         $(".modalNuevoPedido").show();        
     });
-
     
+    $(".boton_crearPedido").click(function(){  
+        aux++; 
+        insertar_pedido(aux);        
+        $(".modalNuevoPedido").hide(); 
+    });
+
+    $(".boton_cancelarPedido").click(function(){
+        $(".modalNuevoPedido").hide(); 
+    });
+    
+    $(document).on('click', "#borrarPedido", function(){
+        var fila_borrar = $(this).parent().parent();//$(this) es el boton que ha generado el evento, me interesa la fila
+        var objeto_dato = { 
+            idPedido:fila_borrar.find('.idPed').text(), //dentro de la fila, busco el td de clase dni, y me quedo con el texto
+        };
+        borrar_pedido(objeto_dato, fila_borrar);
+    });
 
 
 }
@@ -211,6 +228,7 @@ function listar_pedidos() {
                     "<button id='detallesPedido'>Detalles</button>" +
                     "<button id='editarPedido'>Editar</button> " +
                     "<button id='borrarPedido'>Borrar</button></td></tr>");
+                    aux = respuesta[key].idPedido;
             }
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -219,14 +237,12 @@ function listar_pedidos() {
     });
 }
 
-function insertar_pedido() {
+function insertar_pedido(aux) {
     var objeto_dato = {   //Monto un objeto con los datos del pedido a insertar en la BD
-        idPedido: $('#idPedidoNuevo').val(),  //Conseguir bd
-        dniCliente: $('#dniClienteNuevo').val(),
-        fecha: $('#fechaNueva').val()
-    };
-
-    console.log(objeto_dato);
+        idPedido: aux,
+        dniCliente: $('#selectCliente :selected').text(),
+        fecha: $('#fecha').val()
+    };    
 
     $.ajax({
         url: "PHP/pedidos/insertar_pedido.php", // Paso datos 
@@ -236,17 +252,40 @@ function insertar_pedido() {
     }).done(function (respuesta) {
         console.log(respuesta);  // recojo la respuesta, que sera true o false
         if (respuesta) {
-            $(".tablaPedidos tbody").append("<tr><td class='idPedido'>" + respuesta[key].idPedido + "</td><td class='dniCliente'>" + respuesta[key].dniCliente +
-                    "</td> <td class='fecha'>" + respuesta[key].fecha + "</td> <td>" +
+            $(".tablaPedidos tbody").append("<tr><td class='idPedido'>" + objeto_dato.idPedido + "</td><td class='dniCliente'>" + objeto_dato.dniCliente +
+                    "</td> <td class='fecha'>" + objeto_dato.fecha + "</td> <td>" +
                     "<button id='detallesPedido'>Detalles</button>" +
                     "<button id='editarPedido'>Editar</button> " +
-                    "<button id='borrarPedido'>Borrar</button></td></tr>");
+                    "<button id='borrarPedido'>Borrar</button></td></tr>");            
             alert("Dato insertado correctamente !!!!");//si es correcta, inserto los datos en una fila nueva            
         } else {
             alert("Error en la insercion"); //si no es correcta no inserto nada
         }
     }).fail(function (jqXHR, textStatus, errorThrown) {
         console.log("La solicitud ha fallado: " + textStatus + errorThrown);
+    });
+}
+
+function borrar_pedido(objeto_dato, fila_borrar){
+    $.ajax({
+        
+        url: "PHP/pedidos/borrar_pedido.php", // paso el dni del cliente a borrar
+        type: "POST",
+        data: objeto_dato,             
+
+        success: function (respuesta) {
+            console.log(respuesta);  // recojo la respuesta, que sera true o false
+            if (respuesta) {
+                console.log(respuesta);
+                fila_borrar.remove(); // si se ha borrado la fila de la bd, borro de la pagina
+                alert("Linea borrada correctamente !!!!");//si es correcta, borro la fila            
+            } else {
+                alert("Error al borrar"); //si no es correcta enseño mensaje
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log("La solicitud ha fallado: " + textStatus + errorThrown);
+        }
     });
 }
 
@@ -257,8 +296,6 @@ function relleno_select(){
         dataType : 'json', 
 
         success : function(respuesta) {
-            console.log("entro relleno");
-            console.log(respuesta);
             for (var key in respuesta) {
                 $("#selectCliente").append("<option value='" + respuesta[key].dniCliente + "'>" + respuesta[key].dniCliente + "</option>");
             }
@@ -269,3 +306,4 @@ function relleno_select(){
         },
     });
 }
+

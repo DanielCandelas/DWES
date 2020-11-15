@@ -1,18 +1,14 @@
 
 <?php
-    require "../../../php/modelo.php";
-    $link=new Bd;
-    $id = $_POST['idPedido'];
-    
-    $datos = array("idP"=>$id);
-    
-    $pedido= new Pedido ($id, "", "", "");
-    $lineaspedido = new Lineapedido($id, "", "", "");
+    require "../../../SERVIDOR/modelo.php";
+    $base = new Bd();
 
-    if(($pedido->borrar($link->link)) && ($lineaspedido->borrar($link->link))){
-    	echo json_encode($datos);
-    }
+    $pedido = new Pedidos($_POST['idPedido'], '', '', '', '', '');
 
+    $result = $pedido->borrarPedido($base->link);  
     
-    $link->link->close();
+    header('Content-Type: application/json');	
+    echo json_encode($result);
+    
+    $base->link->close();
 ?>

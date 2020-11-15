@@ -246,4 +246,14 @@
             require "vistas/mensaje.php";  
         }
 
+        function insertar($link){  //CLIENTE
+            $consulta = "INSERT INTO pedidos VALUES ($this->idPedido, $this->fecha, '', '', '', '', $this->dniCliente)";
+            return $link->query($consulta);              
+        }
+
+        function borrarPedido($link){  //CLIENTE
+            $consulta = "DELETE FROM pedidos where idPedido='$this->idPedido'";
+            return $link->query($consulta);
+        }
+
     }
