@@ -1,15 +1,17 @@
 
 <?php
-    require "../../../php/modelo.php";
-    $link=new Bd;
-    $id = $_POST['idPedido'];
-    $pedido= new Pedido ($id, "", "", "", "" ,"");
 
-    $datos = $pedido->buscar($link->link);
+    require "../../../SERVIDOR/modelo.php";
+    $base = new Bd();
 
-    $pedidos = array('idPedido' => $datos['idPedido'],'fecha' => $datos['fecha'],'cliente' => $datos['dniCliente'], 'direccion'=>$datos['dirEntrega']);
+    $pedido = new Pedidos($_POST['idPedido'], '', '', '', '', '');
 
-    echo json_encode($pedidos);
+    $datos = $pedido->buscarPedidos($base->link);
 
-    $link->link->close();
+    $result = array('idPedido' => $datos['idPedido'],'dniCliente' => $datos['dniCliente'],'fecha' => $datos['fecha']);
+
+    header('Content-Type: application/json');
+    echo json_encode($result);
+
+    $base->link->close();
 ?>

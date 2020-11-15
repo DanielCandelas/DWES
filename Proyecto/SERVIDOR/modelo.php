@@ -256,4 +256,15 @@
             return $link->query($consulta);
         }
 
+        function editarPedido($link){  //CLIENTE
+            $consulta = "UPDATE clientes SET idPedido='$this->idPedido', fecha='$this->fecha'  WHERE dniCliente='$this->dniCliente'";
+            return $link->query($consulta);
+        }
+
+        function buscarPedidos($link){  //CLIENTE
+            $consulta = "SELECT * FROM pedidos where idPedido='$this->idPedido'";
+            $result = $link->query($consulta);
+            return $result->fetch_assoc();
+        }
+
     }

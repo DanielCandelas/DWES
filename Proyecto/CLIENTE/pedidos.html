@@ -69,6 +69,31 @@
             </div>            
         </form>
     </div>
-    
+
+    <div class="modalEditarPedido">
+        <div class="nuevoPedido"><h3>Editar Pedido</h3></div>
+        <form action="" method="POST">
+            <table class="nuevo">
+                <tr>
+                    <td><label for="fecha">Fecha</label></td>
+                    <td><input type="date" name="fechaEditar" id="fecha"><br></td>
+                </tr>                
+                <tr>
+                    <td><label for="cliente">Cliente</label></td>
+                    <td><input type="text" name="clienteEditar" id="idCliente" disabled><br></td>
+                </tr>             
+                <tr>
+                    <td><label for="idPedidoEditar">Id Pedido</label></td>
+                    <td><input type="text" name="idPedidoEditar " id="idPedidoEditar " disabled><br></td>
+                </tr>              
+            </table>
+            <div class="botonesNuevoCliente">
+                <br>
+                <input type="reset" class="boton_editarPedido" value="Modificar">
+                <input type="reset" class="boton_cancelarPedido" value="Cancelar">                        
+            </div>            
+        </form>
+    </div>
+
 </body>
 </html>

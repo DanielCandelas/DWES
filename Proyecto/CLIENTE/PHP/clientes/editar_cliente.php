@@ -3,9 +3,6 @@
     require "../../../SERVIDOR/modelo.php";
     $base = new Bd();
 
-    $cli = new Cliente ($_POST['dniCliente'], '', '', '', '' ,'');
-    $datos = $cli->buscar($base->link);
-
     $cli = new Cliente($_POST['dniCliente'], $_POST['nombre'] ,$_POST['direccion'], $_POST['email'], '', '');
 
     if($cli->modificar($base->link)){
