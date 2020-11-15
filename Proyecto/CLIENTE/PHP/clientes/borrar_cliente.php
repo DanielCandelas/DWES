@@ -1,10 +1,9 @@
 <?php
 
-    require "../../../php/modelo.php";
-
+    require "../../../SERVIDOR/modelo.php";
     $base = new Bd();
 
-    $dni = $_POST['dato'];
+    $dni = $_POST[''];
     $cli= new Cliente ($dni, '', '', '', '' ,'');
 
     $cli->borrar($base->link);

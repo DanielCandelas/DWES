@@ -77,6 +77,7 @@
         function modificar ($link){
 			$consulta = "UPDATE clientes SET nombre='$this->nombre',  direccion='$this->direccion',  email='$this->email', pwd='$this->pwd' WHERE dniCliente='$this->dni'";            
             return $link->query($consulta);
-		}
+        }       
+        
 
     }

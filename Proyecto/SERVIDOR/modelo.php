@@ -73,7 +73,12 @@
             $this->email = $email;
             $this->pwd = $pwd;
             $this->administrador = $administrador;
-        }        
+        }  
+        
+        static function getAll($link){
+            $consulta = 'SELECT * FROM clientes';
+            return $result = $link->query($consulta);
+        }
 
         function autenticar ($link){  //Autentica que el dni y la pwd metidos son correctos. Y devuelve el nombre correspondiente a la pwd y Dni.
 			$consulta = "SELECT nombre FROM clientes where dniCliente='$this->dni' and pwd='$this->pwd'";
@@ -90,6 +95,11 @@
                     return $value;
                 }          
             }    
+        }
+
+        function insertar ($link){
+            $consulta = "INSERT INTO clientes VALUES ('$this->dni','$this->nombre','$this->direccion','$this->email', '', '')";
+            return $link->query($consulta);
         }
     }
 
