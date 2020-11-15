@@ -5,10 +5,10 @@
 
     $cli = new Cliente ($_POST['dni'], '', '', '', '' ,'');
 
-    $result = $cli->borrar($base->link);
+    $result = $cli->borrar($base->link);  
+    
+    header('Content-Type: application/json');	
+    echo json_encode($result);
     
     $base->link->close();
-
-    header('Content-Type: application/json');	
-	echo json_encode($result);
 ?>

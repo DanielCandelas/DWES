@@ -14,6 +14,7 @@
                 
                 if($admin = $cli->soyAdmin($base->link)){  //Comprobamos si el usuario es administrador o no lo es
                     //Si es administrador hacemos header a CRUD de cliente.
+                    header('Location: Proyecto/../../CLIENTE/index.html');
                     
                 } else { //Si no es adminstrador creamos 3 variables de sesion y hacemos header a principal.php
                     $_SESSION['nombre'] = $nom['nombre']; 

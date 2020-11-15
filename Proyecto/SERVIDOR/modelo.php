@@ -103,12 +103,23 @@
         }
 
         function modificar ($link){  //Con este metodo editamos un Cliente en la BD (Cliente)
-            $consulta="UPDATE clientes SET nombre='$this->nombre',  direccion='$this->direccion',  email='$this->email', '', '' WHERE dniCliente='$this->dni'";
+            $consulta="UPDATE clientes SET nombre='$this->nombre',  direccion='$this->direccion',  email='$this->email' WHERE dniCliente='$this->dni'";
             return $link->query($consulta);
         }
 
         function borrar ($link){  //Con este metodo borramos un Cliente de la BD (Cliente)
             $consulta = "DELETE FROM clientes where dniCliente='$this->dni'";
+            return $link->query($consulta);
+        }
+
+        function buscar ($link){  //Con este metodo buscamos un Cliente de la BD (Cliente)
+            $consulta = "SELECT * FROM clientes where dniCliente='$this->dni'";
+            $result = $link->query($consulta);
+            return $result->fetch_assoc();
+        }
+
+        function rellenoSelect ($link){  //Con este metodo buscamos los dni de Clientes de la BD (Cliente)
+            $consulta = "SELECT dniCliente FROM clientes";
             return $link->query($consulta);
         }
     }
@@ -170,13 +181,15 @@
 
         private $idPedido;
         private $dniCliente;
+        private $fecha;
         private $nlinea;
         private $idProducto;
         private $cantidad; 
 
-        function __construct($idPedido, $dniCliente, $nlinea, $idProducto, $cantidad){
+        function __construct($idPedido, $dniCliente, $fecha, $nlinea, $idProducto, $cantidad){
             $this->idPedido = $idPedido;
             $this->dniCliente = $dniCliente;
+            $this->fecha = $fecha;
             $this->nlinea = $nlinea;
             $this->idProducto = $idProducto;
             $this->cantidad = $cantidad;
@@ -186,6 +199,11 @@
             if(property_exists($this, $property)) {
                 $this->$property = $value;
             }
+        }
+
+        static function getAll($link){
+            $consulta = 'SELECT * FROM pedidos';
+            return $result = $link->query($consulta);
         }
 
         function calcularId($link){

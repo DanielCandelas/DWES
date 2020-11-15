@@ -9,7 +9,7 @@
         $mensaje = "<p> Bienvenio/a ".$_SESSION['nombre']."</p><p>El siguiente pedido a sido registrado</p> <br>";
         require "vistas/mensaje.php";
 
-        $pedidos = new Pedidos('', '', '', '', '');  //Objeto pedidos auxiliar para calcular el id del nuevo pedido
+        $pedidos = new Pedidos('', '', '', '', '', '');  //Objeto pedidos auxiliar para calcular el id del nuevo pedido
         $idPedido = $pedidos->calcularId($base->link);
         $idPedido++;
 

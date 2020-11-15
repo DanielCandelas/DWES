@@ -1,23 +1,22 @@
-
 <?php
-    require "../../../php/modelo.php";
+    
+    require "../../../SERVIDOR/modelo.php";
 
-    $link=new Bd;
-    $result=Pedido::getAll($link->link);
+    $base = new Bd();
+    $result = Pedidos::getAll($base->link);
 
     $pedidos = array();
 
     while($fila = $result->fetch_assoc()){
-        $cliente = new CLiente($fila["dniCliente"],'','','','','');
-        $nombre = $cliente->buscar($link->link);
         array_push($pedidos, array(
-            'idPedido' => $fila["idPedido"],
-            'fecha' => $fila["fecha"],
-            'nombre' => $nombre['nombre']
+            'idPedido' => $fila["idPedido"],            
+            'dniCliente' => $fila['dniCliente'],
+            'fecha' => $fila["fecha"]
         ));
     }
-    
+
+    header('Content-Type: application/json');	
     echo json_encode($pedidos);
 
-    $link->link->close();
+    $base->link->close();
 ?>

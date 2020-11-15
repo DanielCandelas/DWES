@@ -1,15 +1,17 @@
 
 <?php
-    require "../../../php/modelo.php";
-    $link=new Bd;
-    $dni = $_POST['dniCliente'];
-    $cli= new Cliente ($dni, "", "", "", "" ,"");
 
-    $datos = $cli->buscar($link->link);
+    require "../../../SERVIDOR/modelo.php";
+    $base = new Bd();
 
-    $cliente = array('dniCliente' => $datos['dniCliente'],'nombre' => $datos['nombre'],'dir' => $datos['direccion'],'email' => $datos['email']);
+    $cli = new Cliente ($_POST['dni'], '', '', '', '' ,'');
 
+    $datos = $cli->buscar($base->link);
+
+    $cliente = array('dniCliente' => $datos['dniCliente'],'nombre' => $datos['nombre'],'direccion' => $datos['direccion'],'email' => $datos['email']);
+
+    header('Content-Type: application/json');
     echo json_encode($cliente);
 
-    $link->link->close();
+    $base->link->close();
 ?>
