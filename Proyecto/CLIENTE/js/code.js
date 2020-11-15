@@ -2,6 +2,8 @@ window.onload = function () {
 
     $(".modalNuevoCliente").hide();
 
+    $(".modalEditarCliente").hide();
+
     listar_clientes();
 
     $("#nuevoCliente").click(function () {
@@ -17,10 +19,19 @@ window.onload = function () {
         $(".modalNuevoCliente").hide();
     });
 
-    $("#borrarCliente").click(function () {
-        console.log("entra");
-        var dni = $(this).parent().attr("id");
-        borrar_cliente(dni);
+    $(document).on('click', "#borrarCliente", function(){
+        var fila_borrar = $(this).parent().parent();//$(this) es el boton que ha generado el evento, me interesa la fila
+        console.log("entra borrar");   
+        console.log(fila_borrar);   
+         var objeto_dato = { 
+            dni:fila_borrar.find('.dniCli').text(), //dentro de la fila, busco el td de clase dni, y me quedo con el texto
+        };
+        borrar_cliente(objeto_dato, fila_borrar);
+    });
+
+    $(document).on('click', "#editarCliente", function(){
+        $(".modalEditarCliente").show();
+        //editar_cliente();
     });
 
 
@@ -36,7 +47,7 @@ function listar_clientes() {
             console.log(respuesta); // array de objetos, lo itero y pinto una fila por cada objeto
 
             for (var key in respuesta) {
-                $(".tablaClientes tbody").append("<tr id='" + respuesta[key].dniCliente + "'><td id=''>" + respuesta[key].dniCliente + "</td><td id=''>" + respuesta[key].nombre +
+                $(".tablaClientes tbody").append("<tr><td class='dniCli'>" + respuesta[key].dniCliente + "</td><td>" + respuesta[key].nombre +
                     "</td> <td><button id='editarCliente'>Editar</button><button id='borrarCliente'>Borrar</button></td></tr>");
             }
 
@@ -65,7 +76,7 @@ function insertar_cliente() {
     }).done(function (respuesta) {
         console.log(respuesta);  // recojo la respuesta, que sera true o false
         if (respuesta) {
-            $(".tablaClientes tbody").append("<tr id='" + objeto_dato.dniCliente + "'><td id=''>" + objeto_dato.dniCliente + "</td><td id=''>" + objeto_dato.nombre +
+            $(".tablaClientes tbody").append("<tr><td class='dniCli'>" + objeto_dato.dniCliente + "</td><td>" + objeto_dato.nombre +
                 "</td> <td><button id='editarCliente'>Editar</button><button id='borrarCliente'>Borrar</button></td></tr>");
             alert("Dato insertado correctamente !!!!");//si es correcta, inserto los datos en una fila nueva            
         } else {
@@ -76,19 +87,41 @@ function insertar_cliente() {
     });
 }
 
-function borrar_cliente(dni){
-
+function borrar_cliente(objeto_dato, fila_borrar){
     $.ajax({
+        
         url: "PHP/clientes/borrar_cliente.php", // paso el dni del cliente a borrar
         type: "POST",
-        data: ('dato', dni),
-        dataType: "json",
+        data: objeto_dato,     
 
         success: function (respuesta) {
             console.log(respuesta);  // recojo la respuesta, que sera true o false
             if (respuesta) {
                 console.log("entra");
-                $("#" + dni +"").remove();
+                fila_borrar.remove(); // si se ha borrado la fila de la bd, borro de la pagina
+                alert("Linea borrada correctamente !!!!");//si es correcta, borro la fila            
+            } else {
+                alert("Error al borrar"); //si no es correcta enseño mensaje
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log("La solicitud ha fallado: " + textStatus + errorThrown);
+        }
+    });
+}
+
+function editar_cliente(){
+    $.ajax({
+        
+        url: "PHP/clientes/borrar_cliente.php", // paso el dni del cliente a borrar
+        type: "POST",
+        data: objeto_dato,     
+
+        success: function (respuesta) {
+            console.log(respuesta);  // recojo la respuesta, que sera true o false
+            if (respuesta) {
+                console.log("entra");
+                fila_borrar.remove(); // si se ha borrado la fila de la bd, borro de la pagina
                 alert("Linea borrada correctamente !!!!");//si es correcta, borro la fila            
             } else {
                 alert("Error al borrar"); //si no es correcta enseño mensaje

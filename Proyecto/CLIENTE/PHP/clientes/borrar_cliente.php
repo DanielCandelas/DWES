@@ -3,10 +3,12 @@
     require "../../../SERVIDOR/modelo.php";
     $base = new Bd();
 
-    $dni = $_POST[''];
-    $cli= new Cliente ($dni, '', '', '', '' ,'');
+    $cli = new Cliente ($_POST['dni'], '', '', '', '' ,'');
 
-    $cli->borrar($base->link);
+    $result = $cli->borrar($base->link);
     
     $base->link->close();
+
+    header('Content-Type: application/json');	
+	echo json_encode($result);
 ?>

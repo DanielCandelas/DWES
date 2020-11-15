@@ -48,12 +48,12 @@
     <!-- Modales -->
 
     <div class="modalNuevoCliente">
-        <div id="nuevoUsuario"><h3>Nuevo Usuario</h3></div>
+        <div class="nuevoUsuario"><h3>Nuevo Usuario</h3></div>
         <form action="" method="POST">
             <table class="nuevo">
                 <tr>
                     <td><label for="dniCliente">DNI</label></td>
-                    <td><input type="text" name="dniCliente" id="dniCliente"><br></td>
+                    <td><input type="text" name="dniCliente" id="dniCliente" ><br></td>
                 </tr>                
                 <tr>
                     <td><label for="nombreCliente">Nombre</label></td>
@@ -71,6 +71,35 @@
             <div class="botonesNuevoCliente">
                 <br>
                 <input type="reset" class="boton_crear" value="Crear Nuevo">
+                <input type="reset" class="boton_cancelar" value="Cancelar">
+            </div>            
+        </form>
+    </div>
+
+    <div class="modalEditarCliente">
+        <div class="nuevoUsuario"><h3>Nuevo Usuario</h3></div>
+        <form action="" method="POST">
+            <table class="editar">
+                <tr>
+                    <td><label for="dniCliente">DNI</label></td>
+                    <td><input type="text" name="dniCliente" id="dniEditarCliente" disabled><br></td>
+                </tr>                
+                <tr>
+                    <td><label for="nombreCliente">Nombre</label></td>
+                    <td><input type="text" name="nombreCliente" id="nombreEditarCliente"><br></td>
+                </tr>
+                <tr>
+                    <td><label for="direccionCliente">Direccion</label></td>
+                    <td><input type="text" name="direccionCliente" id="direccionEditarCliente"><br></td>
+                </tr>
+                <tr>
+                    <td><label for="emailCliente">Email</label></td>
+                    <td><input type="email" name="emailCliente" id="emailEditarCliente"><br></td>
+                </tr>            
+            </table>
+            <div class="botonesEditarCliente">
+                <br>
+                <input type="reset" class="boton_modificar" value="Modificar">
                 <input type="reset" class="boton_cancelar" value="Cancelar">
             </div>            
         </form>

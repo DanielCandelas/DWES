@@ -108,13 +108,31 @@ a{
     top: 25vh;
     z-index: 1;
     padding: 30px;
+    border-radius: 10px;
 }
 
 .botonesNuevoCliente{
     float: right;
 }
 
-#nuevoUsuario{
+.nuevoUsuario{
     color: white;
     font-size: 20px;
+}
+
+.modalEditarCliente{
+    width: 300px;
+    height: 200px;
+    margin: 0 auto;
+    position: absolute;
+    background-color: rgb(145, 137, 137);
+    left: 40vw;
+    top: 25vh;
+    z-index: 2;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.botonesEditarCliente{
+    float: right;
 }

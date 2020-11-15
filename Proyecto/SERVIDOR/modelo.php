@@ -97,8 +97,18 @@
             }    
         }
 
-        function insertar ($link){
+        function insertar ($link){  //Con este metodo insertamos un nuevo Cliente en la BD (Cliente)
             $consulta = "INSERT INTO clientes VALUES ('$this->dni','$this->nombre','$this->direccion','$this->email', '', '')";
+            return $link->query($consulta);
+        }
+
+        function modificar ($link){  //Con este metodo editamos un Cliente en la BD (Cliente)
+            $consulta="UPDATE clientes SET nombre='$this->nombre',  direccion='$this->direccion',  email='$this->email', '', '' WHERE dniCliente='$this->dni'";
+            return $link->query($consulta);
+        }
+
+        function borrar ($link){  //Con este metodo borramos un Cliente de la BD (Cliente)
+            $consulta = "DELETE FROM clientes where dniCliente='$this->dni'";
             return $link->query($consulta);
         }
     }
