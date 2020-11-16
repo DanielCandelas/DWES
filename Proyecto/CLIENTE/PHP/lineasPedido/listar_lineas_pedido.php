@@ -3,7 +3,7 @@
     require "../../../SERVIDOR/modelo.php";
 
     $base = new Bd();
-    $pedidos = new Pedidos($_POST['idPedido'], '', '', '', '', '');
+    $pedidos = new lineasPedido($_POST['idPedido'], '', '', '');
 
     $aux = $pedidos->listarLineasPedido($base->link);
 

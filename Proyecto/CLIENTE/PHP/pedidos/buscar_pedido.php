@@ -4,7 +4,7 @@
     require "../../../SERVIDOR/modelo.php";
     $base = new Bd();
 
-    $pedido = new Pedidos($_POST['idPedido'], '', '', '', '', '');
+    $pedido = new Pedidos($_POST['idPedido'], '', '');
 
     $datos = $pedido->buscarPedidos($base->link);
 

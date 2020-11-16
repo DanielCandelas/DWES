@@ -3,7 +3,7 @@
     require "../../../SERVIDOR/modelo.php";
     $base = new Bd();
 
-    $pedidos = new Pedidos('', '', '', $_POST['nlinea'], '', '');
+    $pedido = new lineasPedido($_POST['idPedido'], $_POST['nlinea'], '', '');
 
     $result = $pedido->borrarLineaPedido($base->link);  
     

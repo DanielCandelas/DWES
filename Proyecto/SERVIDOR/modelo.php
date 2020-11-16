@@ -182,17 +182,11 @@
         private $idPedido;
         private $dniCliente;
         private $fecha;
-        private $nlinea;
-        private $idProducto;
-        private $cantidad; 
 
-        function __construct($idPedido, $dniCliente, $fecha, $nlinea, $idProducto, $cantidad){
+        function __construct($idPedido, $dniCliente, $fecha){
             $this->idPedido = $idPedido;
             $this->dniCliente = $dniCliente;
             $this->fecha = $fecha;
-            $this->nlinea = $nlinea;
-            $this->idProducto = $idProducto;
-            $this->cantidad = $cantidad;
         }
 
         function __set($property, $value){
@@ -223,12 +217,7 @@
             $idPedido = $this->idPedido;
             $consulta =  "INSERT INTO pedidos VALUES ($this->idPedido, CURDATE(), '', '', '', '', $this->dniCliente)";
             return $link->query($consulta);              
-        }
-
-        function insertarLineasPedido($link){
-            $consulta = "INSERT INTO lineaspedidos VALUES ($this->idPedido, $this->nlinea, $this->idProducto, $this->cantidad)"; 
-            return $link->query($consulta); 
-        }
+        }        
 
         function dibujarCarro(){
             $suma_total = 0;
@@ -267,18 +256,47 @@
             return $result->fetch_assoc();
         }
 
+        
+
+    }
+
+    class lineasPedido{
+
+        private $idPedido;
+        private $nlinea;
+        private $idProducto;
+        private $cantidad; 
+
+        function __construct($idPedido, $nlinea, $idProducto, $cantidad){
+            $this->idPedido = $idPedido;
+            $this->nlinea = $nlinea;
+            $this->idProducto = $idProducto;
+            $this->cantidad = $cantidad;
+        }
+
+        function __set($property, $value){
+            if(property_exists($this, $property)) {
+                $this->$property = $value;
+            }
+        }
+
+        function insertarLineasPedido($link){
+            $consulta = "INSERT INTO lineaspedidos VALUES ($this->idPedido, $this->nlinea, $this->idProducto, $this->cantidad)"; 
+            return $link->query($consulta); 
+        }
+
         function listarLineasPedido($link){  //CLIENTE
             $consulta = "SELECT * FROM lineaspedidos where idPedido='$this->idPedido'";
             return  $link->query($consulta);            
         }
 
         function borrarLineaPedido($link){ //CLIENTE
-            $consulta = "DELETE FROM lineaspedido where nlinea='$this->nlinea' AND idProducto='$this->idProducto'";
+            $consulta = "DELETE FROM lineaspedidos where idPedido='$this->idPedido'";
             return $link->query($consulta);
         }
 
         function insertarLineaPedido($link){  //CLIENTE
-            $consulta = "INSERT INTO lineaspedido VALUES ($this->idPedido, $this->nlinea, $this->idProducto, $this->cantidad)";
+            $consulta = "INSERT INTO lineaspedidos VALUES ($this->idPedido, $this->nlinea, $this->idProducto, $this->cantidad)";
             return $link->query($consulta);              
         }
 

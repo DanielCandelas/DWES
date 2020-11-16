@@ -3,7 +3,7 @@
     require "../../../SERVIDOR/modelo.php";
     $base = new Bd();
 
-    $pedido = new Pedidos($_POST['idPedido'], '', '', '', '', '');
+    $pedido = new Pedidos($_POST['idPedido'], '', '');
 
     $result = $pedido->borrarPedido($base->link);  
     

@@ -9,20 +9,22 @@
         $mensaje = "<p> Bienvenio/a ".$_SESSION['nombre']."</p><p>El siguiente pedido a sido registrado</p> <br>";
         require "vistas/mensaje.php";
 
-        $pedidos = new Pedidos('', '', '', '', '', '');  //Objeto pedidos auxiliar para calcular el id del nuevo pedido
+        $pedidos_lineas = new lineasPedido('', '', '', ''); 
+        $pedidos = new Pedidos('', '', '');  //Objeto pedidos auxiliar para calcular el id del nuevo pedido
         $idPedido = $pedidos->calcularId($base->link);
         $idPedido++;
 
         $pedidos->idPedido = $idPedido;
+        $pedidos_lineas->idPedido = $idPedido;
         $pedidos->dniCliente = $_SESSION['dni'];    
 
         $pedidos->insertarPedido($base->link);
 
         for($i = 0; $i < $_SESSION['total']; $i++){ 
-            $pedidos->nlinea = $i + 1;
-            $pedidos->idProducto = $_SESSION['idProducto'][$i];
-            $pedidos->cantidad = $_SESSION['cantidad'][$i];
-            $pedidos->insertarLineasPedido($base->link);
+            $pedidos_lineas->nlinea = $i + 1;
+            $pedidos_lineas->idProducto = $_SESSION['idProducto'][$i];
+            $pedidos_lineas->cantidad = $_SESSION['cantidad'][$i];
+            $pedidos_lineas->insertarLineasPedido($base->link);
         }
 
         $pedidos->dibujarCarro();

@@ -55,7 +55,7 @@
             <table class="nuevo">
                 <tr>
                     <td><label for="fecha">Fecha</label></td>
-                    <td><input type="date" name="fecha" id="fecha"><br></td>
+                    <td><input type="date" name="fecha" id="fechaPedido"><br></td>
                 </tr>                
                 <tr>
                     <td><label for="cliente">Cliente</label></td>
@@ -90,6 +90,27 @@
             <div class="botonesNuevoCliente">
                 <br>
                 <input type="reset" class="boton_editarPedido" value="Modificar">
+                <input type="reset" class="boton_cancelarPedido" value="Cancelar">                        
+            </div>            
+        </form>
+    </div>
+
+    <div class="modalNuevaLineaPedido">
+        <div class="nuevoPedido"><h3>Nueva Linea Pedido</h3></div>
+        <form action="" method="POST">
+            <table class="nuevo">
+                <tr>
+                    <td><label for="idProducto">Producto</label></td>
+                    <td><input type="text" name="idProducto" id="idProducto"><br></td>
+                </tr>             
+                <tr>
+                    <td><label for="cantidad">Cantidad</label></td>
+                    <td><input type="text" name="cantidad " id="cantidad"><br></td>
+                </tr>              
+            </table>
+            <div class="botonesNuevoCliente">
+                <br>
+                <input type="reset" class="boton_insertarLinea" value="Crear">
                 <input type="reset" class="boton_cancelarPedido" value="Cancelar">                        
             </div>            
         </form>
