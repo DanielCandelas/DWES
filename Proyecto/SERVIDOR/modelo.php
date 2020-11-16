@@ -203,7 +203,7 @@
 
         static function getAll($link){
             $consulta = 'SELECT * FROM pedidos';
-            return $result = $link->query($consulta);
+            return $link->query($consulta);
         }
 
         function calcularId($link){
@@ -257,7 +257,7 @@
         }
 
         function editarPedido($link){  //CLIENTE
-            $consulta = "UPDATE clientes SET idPedido='$this->idPedido', fecha='$this->fecha'  WHERE dniCliente='$this->dniCliente'";
+            $consulta = "UPDATE pedidos SET fecha='$this->fecha' WHERE dniCliente='$this->dniCliente' AND idPedido='$this->idPedido'";
             return $link->query($consulta);
         }
 
@@ -265,6 +265,21 @@
             $consulta = "SELECT * FROM pedidos where idPedido='$this->idPedido'";
             $result = $link->query($consulta);
             return $result->fetch_assoc();
+        }
+
+        function listarLineasPedido($link){  //CLIENTE
+            $consulta = "SELECT * FROM lineaspedidos where idPedido='$this->idPedido'";
+            return  $link->query($consulta);            
+        }
+
+        function borrarLineaPedido($link){ //CLIENTE
+            $consulta = "DELETE FROM lineaspedido where nlinea='$this->nlinea' AND idProducto='$this->idProducto'";
+            return $link->query($consulta);
+        }
+
+        function insertarLineaPedido($link){  //CLIENTE
+            $consulta = "INSERT INTO lineaspedido VALUES ($this->idPedido, $this->nlinea, $this->idProducto, $this->cantidad)";
+            return $link->query($consulta);              
         }
 
     }

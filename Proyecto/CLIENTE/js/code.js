@@ -31,20 +31,20 @@ window.onload = function () {
         borrar_cliente(objeto_dato, fila_borrar);
     });
 
-    $(document).on('click', "#editarCliente", function(){
+    $(document).on('click', ".editarCliente", function(){
         $(".modalEditarCliente").show();
         var fila_editar = $(this).parent().parent();//$(this) es el boton que ha generado el evento, me interesa la fila
-        console.log(fila_editar);   
         var objeto_dato = { 
             dni:fila_editar.find('.dniCli').text(), //dentro de la fila, busco el td de clase dni, y me quedo con el texto
-        };        
-        buscar_cliente(objeto_dato);
+        };     
+        //console.log("entra EDITAR CLIENTE");
+        buscar_cliente(objeto_dato);        
+    });
 
-        $(".boton_modificar").click(function () {
-            editar_cliente(fila_editar);
-            fila_editar.remove();
-            $(".modalEditarCliente").hide();
-        });
+    $(".boton_modificar").click(function () {
+        //console.log("entra BOTON modificar");
+        editar_cliente();
+        $(".modalEditarCliente").hide();
     });
 
     
@@ -66,9 +66,10 @@ window.onload = function () {
 
     $(".boton_cancelarPedido").click(function(){
         $(".modalNuevoPedido").hide(); 
+        $(".modalEditarPedido").hide();
     });
     
-    $(document).on('click', "#borrarPedido", function(){
+    $(document).on('click', ".borrarPedido", function(){
         var fila_borrar = $(this).parent().parent();//$(this) es el boton que ha generado el evento, me interesa la fila
         var objeto_dato = { 
             idPedido:fila_borrar.find('.idPedido').text(), //dentro de la fila, busco el td de clase idPedido, y me quedo con el texto
@@ -76,7 +77,7 @@ window.onload = function () {
         borrar_pedido(objeto_dato, fila_borrar);
     });
 
-    $(document).on('click', "#editarPedido", function(){
+    $(document).on('click', ".editarPedido", function(){
         $(".modalEditarPedido").show();
         var fila_editar = $(this).parent().parent();//$(this) es el boton que ha generado el evento, me interesa la fila
         console.log(fila_editar);   
@@ -84,13 +85,24 @@ window.onload = function () {
             idPedido:fila_editar.find('.idPedido').text(), //dentro de la fila, busco el td de clase idPedido, y me quedo con el texto
         };        
         buscar_pedido(objeto_dato);
-
-        $(".boton_editarPedido").click(function () {
-            editar_pedido();
-            $(".modalEditarPedido").hide();
-        });
     });
 
+    $(".boton_editarPedido").click(function () {
+        editar_pedido();
+        $(".modalEditarPedido").hide();
+    });
+
+//LINEAS PEDIDO
+
+    $(".detallesPedido").click(function () {
+        var fila_detalles = $(this).parent().parent();//$(this) es el boton que ha generado el evento, me interesa la fila  
+        var objeto_dato = { 
+            idPedido:fila_detalles.find('.idPedido').text(), //dentro de la fila, busco el td de clase idPedido, y me quedo con el texto
+        }; 
+        listar_lineas_pedidos(objeto_dato);
+    });
+
+    
 
 }
 
@@ -106,7 +118,7 @@ function listar_clientes() {
 
             for (var key in respuesta) {
                 $(".tablaClientes tbody").append("<tr id='" + respuesta[key].dniCliente + "'><td class='dniCli'>" + respuesta[key].dniCliente + "</td><td class='nombreCli'>" + respuesta[key].nombre +
-                    "</td> <td><button id='editarCliente'>Editar</button><button id='borrarCliente'>Borrar</button></td></tr>");
+                    "</td> <td><button class='editarCliente'>Editar</button><button id='borrarCliente'>Borrar</button></td></tr>");
             }
 
         },
@@ -135,7 +147,7 @@ function insertar_cliente() {
         console.log(respuesta);  // recojo la respuesta, que sera true o false
         if (respuesta) {
             $(".tablaClientes tbody").append("<tr id='" + objeto_dato.dniCliente + "'><td class='dniCli'>" + objeto_dato.dniCliente + "</td><td class='nombreCli'>" + objeto_dato.nombre +
-                "</td> <td><button id='editarCliente'>Editar</button><button id='borrarCliente'>Borrar</button></td></tr>");
+                "</td> <td><button class='editarCliente'>Editar</button><button id='borrarCliente'>Borrar</button></td></tr>");
             alert("Dato insertado correctamente !!!!");//si es correcta, inserto los datos en una fila nueva            
         } else {
             alert("Error en la insercion"); //si no es correcta no inserto nada
@@ -203,6 +215,8 @@ function editar_cliente(){
         email: $('#emailEditarCliente').val()
     };
 
+    //console.log("entra METODO editar");
+
     $.ajax({        
         url: "PHP/clientes/editar_cliente.php", // paso el dni del cliente a modificar
         type: "POST",
@@ -212,11 +226,10 @@ function editar_cliente(){
         success: function (respuesta) {
             console.log(respuesta);  // recojo la respuesta, que sera true o false
             if (respuesta) {
-                console.log("entra editar"); // si se ha modificado la fila de la bd, modifico la de la pagina
-                console.log(objeto_dato.dniCliente); //---------------------------------------------------------------------ARREGLAR
+                //console.log("entra AJAX"); // si se ha modificado la fila de la bd, modifico la de la pagina                
                 $("#"+objeto_dato.dniCliente+"").children().remove(); 
-                $("#"+objeto_dato.dniCliente+"").append("<td>" + objeto_dato.dniCliente + "</td><td>" + respuesta.nombre + 
-                "</td> <td><button id='editarCliente'>Editar</button><button id='borrarCliente'>Borrar</button></td>");
+                $("#"+objeto_dato.dniCliente+"").append("<td class='dniCli'>" + objeto_dato.dniCliente + "</td><td class='nombreCli'>" + respuesta.nombre + 
+                "</td> <td><button class='editarCliente'>Editar</button><button id='borrarCliente'>Borrar</button></td>");
                 alert("Cliente modificado correctamente !!!!");//si es correcta, modifico la fila            
             } else {
                 alert("Error al modificar"); //si no es correcta enseño mensaje
@@ -240,11 +253,11 @@ function listar_pedidos() {
             console.log(respuesta); // array de objetos, lo itero y pinto una fila por cada objeto
 
             for (var key in respuesta) {
-                $(".tablaPedidos tbody").append("<tr><td class='idPedido'>" + respuesta[key].idPedido + "</td><td class='dniCliente'>" + respuesta[key].dniCliente +
+                $(".tablaPedidos tbody").append("<tr class='"+respuesta[key].idPedido+"'><td class='idPedido'>" + respuesta[key].idPedido + "</td><td class='dniCliente'>" + respuesta[key].dniCliente +
                     "</td> <td class='fecha'>" + respuesta[key].fecha + "</td> <td>" +
-                    "<button id='detallesPedido'>Detalles</button>" +
-                    "<button id='editarPedido'>Editar</button> " +
-                    "<button id='borrarPedido'>Borrar</button></td></tr>");
+                    "<button class='detallesPedido'>Detalles</button>" +
+                    "<button class='editarPedido'>Editar</button> " +
+                    "<button class='borrarPedido'>Borrar</button></td></tr>");
                     aux = respuesta[key].idPedido;
             }
         },
@@ -269,11 +282,11 @@ function insertar_pedido(aux) {
     }).done(function (respuesta) {
         console.log(respuesta);  // recojo la respuesta, que sera true o false
         if (respuesta) {
-            $(".tablaPedidos tbody").append("<tr><td class='idPedido'>" + objeto_dato.idPedido + "</td><td class='dniCliente'>" + objeto_dato.dniCliente +
+            $(".tablaPedidos tbody").append("<tr class='"+objeto_dato.idPedido+"'><td class='idPedido'>" + objeto_dato.idPedido + "</td><td class='dniCliente'>" + objeto_dato.dniCliente +
                     "</td> <td class='fecha'>" + objeto_dato.fecha + "</td> <td>" +
-                    "<button id='detallesPedido'>Detalles</button>" +
-                    "<button id='editarPedido'>Editar</button> " +
-                    "<button id='borrarPedido'>Borrar</button></td></tr>");            
+                    "<button class='detallesPedido'>Detalles</button>" +
+                    "<button class='editarPedido'>Editar</button> " +
+                    "<button class='borrarPedido'>Borrar</button></td></tr>");          
             alert("Dato insertado correctamente !!!!");//si es correcta, inserto los datos en una fila nueva            
         } else {
             alert("Error en la insercion"); //si no es correcta no inserto nada
@@ -310,13 +323,9 @@ function borrar_pedido(objeto_dato, fila_borrar){
 function editar_pedido(){
     var objeto_dato = {   //Monto un objeto con los datos del pedido a insertar en la BD
         idPedido: $('#idPedidoEditar').val(),
-        dniClienteEditar: $('#idCliente').val(),
-        fechaEditar: $('#fechaEditar').val()
+        dniCliente: $('#idClienteEditar').val(),
+        fecha: $('#fechaEditar').val()
     };
-
-    console.log(objeto_dato.idPedido);
-    console.log(objeto_dato.dniClienteEditar);
-    console.log(objeto_dato.fechaEditar);
 
     $.ajax({        
         url: "PHP/pedidos/editar_pedido.php", // paso el dni del cliente a modificar
@@ -327,11 +336,13 @@ function editar_pedido(){
         success: function (respuesta) {
             console.log(respuesta);  // recojo la respuesta, que sera true o false
             if (respuesta) {
-                console.log("entra editar"); // si se ha modificado la fila de la bd, modifico la de la pagina
+                console.log("entra editar pedido"); // si se ha modificado la fila de la bd, modifico la de la pagina
                 console.log(objeto_dato.idPedido); //---------------------------------------------------------------------ARREGLAR
-                $("#"+objeto_dato.idPedido+"").children().remove(); 
-                $("#"+objeto_dato.idPedido+"").append("<td>" + objeto_dato.idPedido + "</td><td>" + objeto_dato.dniClienteEditar + "</td><td>" + respuesta.fecha + 
-                "</td> <td><button id='editarCliente'>Editar</button><button id='borrarCliente'>Borrar</button></td>");
+                $("."+objeto_dato.idPedido+"").children().remove(); 
+                $("."+objeto_dato.idPedido+"").append("<td>" + objeto_dato.idPedido + "</td><td>" + objeto_dato.dniCliente + "</td><td>" + respuesta.fecha + 
+                "</td><td><button class='detallesPedido'>Detalles</button>" +
+                "<button class='editarPedido'>Editar</button> " +
+                "<button class='borrarPedido'>Borrar</button></td>");
                 alert("Cliente modificado correctamente !!!!");//si es correcta, modifico la fila            
             } else {
                 alert("Error al modificar"); //si no es correcta enseño mensaje
@@ -355,8 +366,7 @@ function buscar_pedido(objeto_dato){
             console.log("entra buscar");
             console.log(respuesta);  // recojo la respuesta
             if (respuesta) {   
-                console.log(respuesta.idPedido);  
-                $("#idCliente").val(respuesta.dniCliente);
+                $("#idClienteEditar").val(respuesta.dniCliente);
                 $("#fechaEditar").val(respuesta.fecha);
                 $("#idPedidoEditar").val(respuesta.idPedido);
             } else {
@@ -387,3 +397,80 @@ function relleno_select(){
     });
 }
 
+//LINEAS PEDIDO
+function listar_lineas_pedidos(objeto_dato) {
+    $.ajax({
+        url: "PHP/lineasPedido/listar_lineas_pedido.php", // no paso ningun dato, solo recojo
+        type: "POST",
+        data: objeto_dato,
+        dataType: "json",
+
+        success: function (respuesta) {
+            console.log(respuesta); // array de objetos, lo itero y pinto una fila por cada objeto
+
+            for (var key in respuesta) {
+                $(".tablaPedidos tbody").append("<tr class='"+respuesta[key].idPedido+"'><td class='idPedido'>" + respuesta[key].idPedido + "</td><td class='dniCliente'>" + respuesta[key].dniCliente +
+                    "</td> <td class='fecha'>" + respuesta[key].fecha + "</td> <td>" +
+                    "<button class='detallesPedido'>Detalles</button>" +
+                    "<button class='editarPedido'>Editar</button> " +
+                    "<button class='borrarPedido'>Borrar</button></td></tr>");
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log("La solicitud ha fallado: " + textStatus + errorThrown);
+        }
+    });
+}
+
+function insertar_linea_pedido() {
+    var objeto_dato = {   //Monto un objeto con los datos del pedido a insertar en la BD
+        idPedido: aux,
+        dniCliente: $('#selectCliente :selected').text(),
+        fecha: $('#fecha').val()
+    };    
+
+    $.ajax({
+        url: "PHP/pedidos/insertar_pedido.php", // Paso datos 
+        type: "POST",
+        data: objeto_dato,
+        dataType: "json",
+    }).done(function (respuesta) {
+        console.log(respuesta);  // recojo la respuesta, que sera true o false
+        if (respuesta) {
+            $(".tablaPedidos tbody").append("<tr class='"+objeto_dato.idPedido+"'><td class='idPedido'>" + objeto_dato.idPedido + "</td><td class='dniCliente'>" + objeto_dato.dniCliente +
+                    "</td> <td class='fecha'>" + objeto_dato.fecha + "</td> <td>" +
+                    "<button class='detallesPedido'>Detalles</button>" +
+                    "<button class='editarPedido'>Editar</button> " +
+                    "<button class='borrarPedido'>Borrar</button></td></tr>");          
+            alert("Dato insertado correctamente !!!!");//si es correcta, inserto los datos en una fila nueva            
+        } else {
+            alert("Error en la insercion"); //si no es correcta no inserto nada
+        }
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+        console.log("La solicitud ha fallado: " + textStatus + errorThrown);
+    });
+}
+
+function borrar_linea_pedido(objeto_dato, fila_borrar){
+    console.log(objeto_dato);
+    $.ajax({
+        
+        url: "PHP/pedidos/borrar_pedido.php", // paso el dni del cliente a borrar
+        type: "POST",
+        data: objeto_dato,  
+
+        success: function (respuesta) {
+            console.log(respuesta);  // recojo la respuesta, que sera true o false
+            if (respuesta) {
+                console.log(respuesta);
+                fila_borrar.remove(); // si se ha borrado la fila de la bd, borro de la pagina
+                alert("Linea borrada correctamente !!!!");//si es correcta, borro la fila            
+            } else {
+                alert("Error al borrar"); //si no es correcta enseño mensaje
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log("La solicitud ha fallado: " + textStatus + errorThrown);
+        }
+    });
+}

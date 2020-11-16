@@ -3,7 +3,7 @@
     require "../../../SERVIDOR/modelo.php";
     $base = new Bd();
 
-    $pedido = new Pedidos($_POST['idPedidoEditar'], $_POST['dniClienteEditar'], $_POST['fechaEditar'], '', '', '');
+    $pedido = new Pedidos($_POST['idPedido'], $_POST['dniCliente'], $_POST['fecha'], '', '', '');
 
     if($pedido->editarPedido($base->link)){
         $result = array('idPedido' => $_POST['idPedido'], 'dniCliente' => $_POST['dniCliente'], 'fecha' => $_POST['fecha']);
