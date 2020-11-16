@@ -1,15 +1,13 @@
 <?php
 
     require "../../../SERVIDOR/modelo.php";
-    $base = new Bd();
+    $base = new Bd();    
 
-    $fecha = $_POST['fecha'];
-
-    $pedido = new Pedidos($_POST['idPedido'], $_POST['dniCliente'], $fecha);
+    $pedido = new Pedidos($_POST['idPedido'], $_POST['dniCliente'], $_POST['fecha']);
 
     $result = $pedido->insertar($base->link);
 
-	header('Content-Type: application/json');	
+    header('Content-Type: application/json');
 	echo json_encode($result);
     
     $base->link->close();

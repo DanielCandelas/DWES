@@ -236,6 +236,10 @@
         }
 
         function insertar($link){  //CLIENTE
+            //$fecha = $this->fecha;  //El POST nos devuelve un string
+            //$fechaFinal = strtotime($fecha); //Convierte el string a formato de fecha en php 
+            //$fechaFinal = date('Y-m-d', $fechaFinal);  //Lo comvierte a formato de fecha en MySQL
+            
             $consulta = "INSERT INTO pedidos VALUES ($this->idPedido, $this->fecha, '', '', '', '', $this->dniCliente)";
             return $link->query($consulta);              
         }

@@ -293,8 +293,10 @@ function insertar_pedido(aux) {
     var objeto_dato = {   //Monto un objeto con los datos del pedido a insertar en la BD
         idPedido: aux,
         dniCliente: $('#selectCliente :selected').text(),
-        fecha: $('#fechaPedido').val()
-    };    
+        fecha: $('#fechaPedido').val(),
+    };  
+    
+    console.log(objeto_dato.fecha);
 
     $.ajax({
         url: "PHP/pedidos/insertar_pedido.php", // Paso datos 
@@ -356,10 +358,10 @@ function editar_pedido(){
         dataType: "json",     
 
         success: function (respuesta) {
-            console.log(respuesta);  // recojo la respuesta, que sera true o false
+            //console.log(respuesta);  // recojo la respuesta, que sera true o false
             if (respuesta) {
-                console.log("entra editar pedido"); // si se ha modificado la fila de la bd, modifico la de la pagina
-                console.log(objeto_dato.idPedido); //---------------------------------------------------------------------ARREGLAR
+                //console.log("entra editar pedido"); // si se ha modificado la fila de la bd, modifico la de la pagina
+                //console.log(objeto_dato.idPedido); //---------------------------------------------------------------------ARREGLAR
                 $("."+objeto_dato.idPedido+"").children().remove(); 
                 $("."+objeto_dato.idPedido+"").append("<td>" + objeto_dato.idPedido + "</td><td>" + objeto_dato.dniCliente + "</td><td>" + respuesta.fecha + 
                 "</td><td><button class='detallesPedido'>Detalles</button>" +
