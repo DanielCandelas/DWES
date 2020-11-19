@@ -111,6 +111,66 @@ a{
     float: right;
 }
 
+.tablaClientes tr{
+    background-color: rgb(235, 166, 141);
+    border-collapse: collapse;
+    margin: 10px;
+    border-bottom: 10px solid black;
+}
+
+.tablaClientes td{
+    margin: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 330px;
+}
+
+.tablaClientes th{
+    margin: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 330px;
+    text-align: start;
+}
+
+button{
+    background-color: rgb(31, 128, 48);
+    border-radius: 5px;
+    margin: 10px;
+    color: white;
+    padding: 5px;
+}
+
+.tablaPedidos tr{
+    background-color: rgb(235, 166, 141);
+    border-collapse: collapse;
+    margin: 10px;
+    border-bottom: 10px solid black;
+}
+
+.tablaPedidos td{
+    margin: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 330px;
+}
+
+.tablaPedidos th{
+    margin: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 250px;
+    text-align: start;
+}
+
 
 
 
