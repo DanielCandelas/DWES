@@ -299,9 +299,15 @@
             return $link->query($consulta);
         }
 
-        function insertarLineaPedido($link){  //CLIENTE
+        function insertarLinea($link){  //CLIENTE
             $consulta = "INSERT INTO lineaspedidos VALUES ($this->idPedido, $this->nlinea, $this->idProducto, $this->cantidad)";
             return $link->query($consulta);              
+        }
+        
+        function buscarLinea($link){  //CLIENTE
+            $consulta = "SELECT (MAX)nlinea FROM lineaspedidos where idPedido='$this->idPedido";
+            $result = $link->query($consulta);
+            return $result->fetch_assoc();             
         }
 
     }

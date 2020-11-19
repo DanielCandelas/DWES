@@ -1,6 +1,6 @@
 var aux;
 var idAux;
-var lineas;
+var nLineas;
 
 window.onload = function () {
 
@@ -104,8 +104,8 @@ window.onload = function () {
             idPedido:fila_detalles.find('.idPedido').text(), //dentro de la fila, busco el td de clase idPedido, y me quedo con el texto
         }; 
         idAux = objeto_dato.idPedido;
-        console.log("entra detalles");
-        listar_lineas_pedidos(objeto_dato);
+        console.log("entra detalles");        
+        listar_lineas_pedidos(objeto_dato);        
     });
 
     $(document).on('click', ".borrarLineaPedido", function(){
@@ -117,14 +117,16 @@ window.onload = function () {
         borrar_linea_pedido(objeto_dato, fila_borrar);
     });
 
+    $(document).on('click', ".nuevaLineaPedido", function(){        
+        $(".modalNuevaLineaPedido").show();          
+    });
+
     $(".boton_insertarLinea").click(function(){ 
-        $(".modalNuevaLineaPedido").hide();   
-        insertar_linea_pedido(idAux, lineas);               
+        insertar_linea_pedido(idAux);
+        $(".modalNuevaLineaPedido").hide();                          
     });   
 
-    $(document).on('click', ".nuevaLineaPedido", function(){
-        $(".modalNuevaLineaPedido").show(); 
-    });
+    
 
 }
 
@@ -360,8 +362,6 @@ function editar_pedido(){
         success: function (respuesta) {
             //console.log(respuesta);  // recojo la respuesta, que sera true o false
             if (respuesta) {
-                //console.log("entra editar pedido"); // si se ha modificado la fila de la bd, modifico la de la pagina
-                //console.log(objeto_dato.idPedido); //---------------------------------------------------------------------ARREGLAR
                 $("."+objeto_dato.idPedido+"").children().remove(); 
                 $("."+objeto_dato.idPedido+"").append("<td>" + objeto_dato.idPedido + "</td><td>" + objeto_dato.dniCliente + "</td><td>" + respuesta.fecha + 
                 "</td><td><button class='detallesPedido'>Detalles</button>" +
@@ -425,7 +425,7 @@ function relleno_select(){
 function listar_lineas_pedidos(objeto_dato) {  //Falta que se cierre -------------------------------
 
     $("."+objeto_dato.idPedido+"").after("<table class='tablaLineasPedido' style='background-color: aqua'><tr><th>Linea</th> <th>Cantidad</th> <th>Producto</th ><th>Acciones</th></tr></table>");
-    console.log(objeto_dato);
+    //console.log(objeto_dato);
     $.ajax({
         url: "PHP/lineasPedido/listar_lineas_pedido.php", // no paso ningun dato, solo recojo
         type: "POST",
@@ -433,16 +433,13 @@ function listar_lineas_pedidos(objeto_dato) {  //Falta que se cierre -----------
         dataType: "json",
 
         success: function (respuesta) {
-            console.log(respuesta); // array de objetos, lo itero y pinto una fila por cada objeto
-
+            console.log(respuesta); // array de objetos, lo itero y pinto una fila por cada objeto      
             for (var key in respuesta) {
-                $(".tablaLineasPedido").append("<tr class='"+respuesta[key].nlinea+"'><td class='nlinea'>" + respuesta[key].nlinea + "</td><td class='cantidad'>" + respuesta[key].cantidad +
+                $("."+objeto_dato.idPedido+" .tablaLineasPedido").append("<tr class='"+respuesta[key].nlinea+"'><td class='nlinea'>" + respuesta[key].nlinea + "</td><td class='cantidad'>" + respuesta[key].cantidad +
                     "</td> <td class='producto'>" + respuesta[key].idProducto + "</td> <td>" +
                     "<button class='borrarLineaPedido'>Borrar</button></td></tr>");
-                lineas++;
             }            
-            $(".tablaLineasPedido").append("<tr><td><button class='nuevaLineaPedido'>Añadir</button></td></tr>");
-
+            $(".tablaLineasPedido").append("<tr class='lineaBoton'><td><button class='nuevaLineaPedido'>Añadir</button></td></tr>");
 
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -451,13 +448,13 @@ function listar_lineas_pedidos(objeto_dato) {  //Falta que se cierre -----------
     });
 }
 
-function insertar_linea_pedido(lineas) {
-    lineas++;
+function insertar_linea_pedido() {
+
     var objeto_dato = {   //Monto un objeto con los datos del pedido a insertar en la BD
         idPedido: idAux,
         idProducto: $('#idProducto').val(),
-        nlinea: lineas,
-        cantidad: $("#cantidad").val()
+        nlinea: $("#numerolineas").val(),
+        cantidad: $("#cantidad").val() 
     };   
     
     console.log(objeto_dato);
@@ -470,10 +467,9 @@ function insertar_linea_pedido(lineas) {
     }).done(function (respuesta) {
         console.log(respuesta);  // recojo la respuesta, que sera true o false
         if (respuesta) {
-            $(".tablaLineasPedido").append("<tr class='"+objeto_dato.nlinea+"'><td class='nlinea'>" + objeto_dato.nlinea + "</td><td class='cantidad'>" + objeto_dato.cantidad +
+            $("."+idAux+".lineaBoton").before("<tr class='"+objeto_dato.nlinea+"'><td class='nlinea'>" + objeto_dato.nlinea + "</td><td class='cantidad'>" + objeto_dato.cantidad +
                     "</td> <td class='producto'>" + objeto_dato.idProducto + "</td> <td>" +
-                    "<button class='borrarLineaPedido'>Borrar</button></td></tr>");   
-                lineas++;      
+                    "<button class='borrarLineaPedido'>Borrar</button></td></tr>");               
             alert("Dato insertado correctamente !!!!");//si es correcta, inserto los datos en una fila nueva            
         } else {
             alert("Error en la insercion"); //si no es correcta no inserto nada
@@ -499,6 +495,30 @@ function borrar_linea_pedido(objeto_dato, fila_borrar){
                 alert("Linea borrada correctamente !!!!");//si es correcta, borro la fila            
             } else {
                 alert("Error al borrar"); //si no es correcta enseño mensaje
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log("La solicitud ha fallado: " + textStatus + errorThrown);
+        }
+    });
+}
+
+function buscar_nlinea(idAux){
+    console.log("entra buscar");
+    $.ajax({
+        
+        url: "PHP/lineasPedido/buscar_nlinea.php", // paso el idPedido y recogo el max nlinea
+        type: "POST",
+        data: idAux,   
+        dataType: "json",  
+
+        success: function (respuesta) {
+            console.log("entra buscar");
+            console.log(respuesta);  // recojo la respuesta
+            if (respuesta) {   
+                $("#numerolineas").val(respuesta.nlinea + 1)
+            } else {
+                alert("Error al buscar"); //si no es correcta enseño mensaje
             }
         },
         error: function (jqXHR, textStatus, errorThrown) {

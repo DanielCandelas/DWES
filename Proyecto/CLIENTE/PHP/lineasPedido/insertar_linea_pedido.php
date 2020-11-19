@@ -5,7 +5,7 @@
 
     $pedido = new lineasPedido($_POST['idPedido'], $_POST['nlinea'], $_POST['idProducto'], $_POST['cantidad']);
 
-    $result = $pedido->insertarLineaPedido($base->link);
+    $result = $pedido->insertarLinea($base->link);
 
 	header('Content-Type: application/json');	
 	echo json_encode($result);
