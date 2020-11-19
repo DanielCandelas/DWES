@@ -1,0 +1,21 @@
+
+.modalNuevoCliente,
+.modalNuevoPedido,
+.modalEditarPedido,
+.modalNuevaLineaPedido,
+.modalEditarCliente {
+    width: 300px;
+    height: 200px;
+    margin: 0 auto;
+    position: absolute;
+    background-color: rgb(18, 155, 98);
+    left: 40vw;
+    top: 25vh;
+    z-index: 1;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.tablaLineasPedido{
+    background-color: rgb(221, 154, 29);
+}

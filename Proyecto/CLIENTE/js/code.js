@@ -192,9 +192,11 @@ function borrar_cliente(objeto_dato, fila_borrar){
         success: function (respuesta) {
             console.log(respuesta);  // recojo la respuesta, que sera true o false
             if (respuesta) {
-                console.log("entra");
-                fila_borrar.remove(); // si se ha borrado la fila de la bd, borro de la pagina
-                alert("Linea borrada correctamente !!!!");//si es correcta, borro la fila            
+                var borra = confirm("Desea borrar la linea");
+                if(borra){
+                    fila_borrar.remove(); // si se ha borrado la fila de la bd, borro de la pagina
+                    alert("Linea borrada correctamente !!!!");//si es correcta, borro la fila   
+                }            
             } else {
                 alert("Error al borrar"); //si no es correcta enseño mensaje
             }
@@ -334,8 +336,11 @@ function borrar_pedido(objeto_dato, fila_borrar){
             console.log(respuesta);  // recojo la respuesta, que sera true o false
             if (respuesta) {
                 console.log(respuesta);
-                fila_borrar.remove(); // si se ha borrado la fila de la bd, borro de la pagina
-                alert("Linea borrada correctamente !!!!");//si es correcta, borro la fila            
+                var borra = confirm("Desea borrar la linea");
+                if(borra){
+                    fila_borrar.remove(); // si se ha borrado la fila de la bd, borro de la pagina
+                alert("Linea borrada correctamente !!!!");//si es correcta, borro la fila   
+                }           
             } else {
                 alert("Error al borrar"); //si no es correcta enseño mensaje
             }
@@ -424,7 +429,7 @@ function relleno_select(){
 //LINEAS PEDIDO
 function listar_lineas_pedidos(objeto_dato) {  //Falta que se cierre -------------------------------
 
-    $("."+objeto_dato.idPedido+"").after("<table class='tablaLineasPedido' style='background-color: aqua'><tr><th>Linea</th> <th>Cantidad</th> <th>Producto</th ><th>Acciones</th></tr></table>");
+    $("."+objeto_dato.idPedido+"").after("<table class='tablaLineasPedido' style='background-color: orange'><tr><th>Linea</th> <th>Cantidad</th> <th>Producto</th ><th>Acciones</th></tr></table>");
     //console.log(objeto_dato);
     $.ajax({
         url: "PHP/lineasPedido/listar_lineas_pedido.php", // no paso ningun dato, solo recojo
@@ -491,8 +496,11 @@ function borrar_linea_pedido(objeto_dato, fila_borrar){
             console.log(respuesta);  // recojo la respuesta, que sera true o false
             if (respuesta) {
                 console.log(respuesta);
-                fila_borrar.remove(); // si se ha borrado la fila de la bd, borro de la pagina
-                alert("Linea borrada correctamente !!!!");//si es correcta, borro la fila            
+                var borra = confirm("Desea borrar la linea");
+                if(borra){
+                    fila_borrar.remove(); // si se ha borrado la fila de la bd, borro de la pagina
+                alert("Linea borrada correctamente !!!!");//si es correcta, borro la fila   
+                }                          
             } else {
                 alert("Error al borrar"); //si no es correcta enseño mensaje
             }
