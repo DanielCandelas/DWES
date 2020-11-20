@@ -87,10 +87,10 @@ window.onload = function () {
     $(document).on('click', ".editarPedido", function(){
         $(".modalEditarPedido").show();
         var fila_editar = $(this).parent().parent();//$(this) es el boton que ha generado el evento, me interesa la fila
-        console.log(fila_editar);   
         var objeto_dato = { 
             idPedido:fila_editar.find('.idPedido').text(), //dentro de la fila, busco el td de clase idPedido, y me quedo con el texto
-        };        
+        };   
+        console.log("ID: "+objeto_dato.idPedido);     
         buscar_pedido(objeto_dato);
     });
 
@@ -358,9 +358,11 @@ function borrar_pedido(objeto_dato, fila_borrar, borra){
 function editar_pedido(){
     var objeto_dato = {   //Monto un objeto con los datos del pedido a insertar en la BD
         idPedido: $('#idPedidoEditar').val(),
-        dniCliente: $('#idClienteEditar').val(),
+        dniCliente: $('#idClienteEditar :selected').text(),
         fecha: $('#fechaEditar').val()
     };
+
+    console.log(objeto_dato);
 
     $.ajax({        
         url: "PHP/pedidos/editar_pedido.php", // paso el dni del cliente a modificar
@@ -399,7 +401,7 @@ function buscar_pedido(objeto_dato){
             console.log("entra buscar");
             console.log(respuesta);  // recojo la respuesta
             if (respuesta) {   
-                $("#idClienteEditar").val(respuesta.dniCliente);
+                //$("#idClienteEditar").val(respuesta.dniCliente);
                 $("#fechaEditar").val(respuesta.fecha);
                 $("#idPedidoEditar").val(respuesta.idPedido);
             } else {
@@ -421,6 +423,7 @@ function relleno_select(){
         success : function(respuesta) {
             for (var key in respuesta) {
                 $("#selectCliente").append("<option value='" + respuesta[key].dniCliente + "'>" + respuesta[key].dniCliente + "</option>");
+                $("#idClienteEditar").append("<option value='" + respuesta[key].dniCliente + "'>" + respuesta[key].dniCliente + "</option>");                
             }
         },       
 
@@ -543,4 +546,4 @@ function buscar_nlinea(idAux){
     });
 }
 
- //nlinea se recoge de la base de datos, poner el nombre envez de dni en pedidos, poner select en editar pedido
+ //nlinea se recoge de la base de datos, poner el nombre envez de dni en pedidos

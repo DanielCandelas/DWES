@@ -250,7 +250,7 @@
         }
 
         function editarPedido($link){  //CLIENTE
-            $consulta = "UPDATE pedidos SET fecha='$this->fecha' WHERE dniCliente='$this->dniCliente' AND idPedido='$this->idPedido'";
+            $consulta = "UPDATE pedidos SET fecha='$this->fecha', dniCliente='$this->dniCliente' WHERE idPedido='$this->idPedido'";
             return $link->query($consulta);
         }
 
