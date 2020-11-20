@@ -140,7 +140,7 @@ a{
 button{
     background-color: rgb(31, 128, 48);
     border-radius: 5px;
-    margin: 10px;
+    margin: 5px;
     color: white;
     padding: 5px;
 }
@@ -154,8 +154,8 @@ button{
 
 .tablaPedidos td{
     margin: 10px;
-    padding-top: 10px;
-    padding-bottom: 10px;;
+    padding-top: 5px;
+    padding-bottom: 5px;;
     padding-left: 20px;
     padding-right: 20px;
     width: 330px;

@@ -26,11 +26,13 @@ window.onload = function () {
     });
 
     $(document).on('click', "#borrarCliente", function(){
+        var borra = confirm("Desea borrar la linea");
         var fila_borrar = $(this).parent().parent();//$(this) es el boton que ha generado el evento, me interesa la fila
         var objeto_dato = { 
             dni:fila_borrar.find('.dniCli').text(), //dentro de la fila, busco el td de clase dni, y me quedo con el texto
         };
-        borrar_cliente(objeto_dato, fila_borrar);
+        borrar_cliente(objeto_dato, fila_borrar, borra); 
+               
     });
 
     $(document).on('click', ".editarCliente", function(){
@@ -74,11 +76,12 @@ window.onload = function () {
     });
     
     $(document).on('click', ".borrarPedido", function(){
+        var borra = confirm("Desea borrar la linea");
         var fila_borrar = $(this).parent().parent();//$(this) es el boton que ha generado el evento, me interesa la fila
         var objeto_dato = { 
             idPedido:fila_borrar.find('.idPedido').text(), //dentro de la fila, busco el td de clase idPedido, y me quedo con el texto
         };
-        borrar_pedido(objeto_dato, fila_borrar);
+        borrar_pedido(objeto_dato, fila_borrar, borra);
     });
 
     $(document).on('click', ".editarPedido", function(){
@@ -109,12 +112,13 @@ window.onload = function () {
     });
 
     $(document).on('click', ".borrarLineaPedido", function(){
+        var borra = confirm("Desea borrar la linea");
         var fila_borrar = $(this).parent().parent();//$(this) es el boton que ha generado el evento, me interesa la fila
         var objeto_dato = { 
             idPedido: idAux,
             nlinea:fila_borrar.find('.nlinea').text(), //dentro de la fila, busco el td de clase nlinea, y me quedo con el texto
         };
-        borrar_linea_pedido(objeto_dato, fila_borrar);
+        borrar_linea_pedido(objeto_dato, fila_borrar, borra);
     });
 
     $(document).on('click', ".nuevaLineaPedido", function(){        
@@ -181,30 +185,30 @@ function insertar_cliente() {
     });
 }
 
-function borrar_cliente(objeto_dato, fila_borrar){
-    $.ajax({
-        
-        url: "PHP/clientes/borrar_cliente.php", // paso el dni del cliente a borrar
-        type: "POST",
-        data: objeto_dato, 
+function borrar_cliente(objeto_dato, fila_borrar, borra){
+    console.log(borra);
+    if(borra){        
+        $.ajax({
             
+            url: "PHP/clientes/borrar_cliente.php", // paso el dni del cliente a borrar
+            type: "POST",
+            data: objeto_dato, 
+                
 
-        success: function (respuesta) {
-            console.log(respuesta);  // recojo la respuesta, que sera true o false
-            if (respuesta) {
-                var borra = confirm("Desea borrar la linea");
-                if(borra){
+            success: function (respuesta) {
+                console.log("entra AJAX");  // recojo la respuesta, que sera true o false
+                if (respuesta) {              
                     fila_borrar.remove(); // si se ha borrado la fila de la bd, borro de la pagina
-                    alert("Linea borrada correctamente !!!!");//si es correcta, borro la fila   
-                }            
-            } else {
-                alert("Error al borrar"); //si no es correcta enseño mensaje
+                    alert("Linea borrada correctamente !!!!");//si es correcta, borro la fila                               
+                } else {
+                    alert("Error al borrar"); //si no es correcta enseño mensaje
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log("La solicitud ha fallado: " + textStatus + errorThrown);
             }
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.log("La solicitud ha fallado: " + textStatus + errorThrown);
-        }
-    });
+        });
+    }
 }
 
 function buscar_cliente(objeto_dato){
@@ -324,31 +328,30 @@ function insertar_pedido(aux) {
     });
 }
 
-function borrar_pedido(objeto_dato, fila_borrar){
+function borrar_pedido(objeto_dato, fila_borrar, borra){
     console.log(objeto_dato);
-    $.ajax({
-        
-        url: "PHP/pedidos/borrar_pedido.php", // paso el dni del cliente a borrar
-        type: "POST",
-        data: objeto_dato,  
+    if(borra){
+        $.ajax({
+            
+            url: "PHP/pedidos/borrar_pedido.php", // paso el dni del cliente a borrar
+            type: "POST",
+            data: objeto_dato,  
 
-        success: function (respuesta) {
-            console.log(respuesta);  // recojo la respuesta, que sera true o false
-            if (respuesta) {
-                console.log(respuesta);
-                var borra = confirm("Desea borrar la linea");
-                if(borra){
-                    fila_borrar.remove(); // si se ha borrado la fila de la bd, borro de la pagina
-                alert("Linea borrada correctamente !!!!");//si es correcta, borro la fila   
-                }           
-            } else {
-                alert("Error al borrar"); //si no es correcta enseño mensaje
+            success: function (respuesta) {
+                console.log(respuesta);  // recojo la respuesta, que sera true o false
+                if (respuesta) {
+                    console.log(respuesta);
+                        fila_borrar.remove(); // si se ha borrado la fila de la bd, borro de la pagina
+                        alert("Linea borrada correctamente !!!!");//si es correcta, borro la fila                                 
+                } else {
+                    alert("Error al borrar"); //si no es correcta enseño mensaje
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log("La solicitud ha fallado: " + textStatus + errorThrown);
             }
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.log("La solicitud ha fallado: " + textStatus + errorThrown);
-        }
-    });
+        });
+    }
 }
 
 function editar_pedido(){
@@ -429,7 +432,7 @@ function relleno_select(){
 //LINEAS PEDIDO
 function listar_lineas_pedidos(objeto_dato) {  //Falta que se cierre -------------------------------
 
-    $("."+objeto_dato.idPedido+"").after("<table class='tablaLineasPedido' style='background-color: orange'><tr><th>Linea</th> <th>Cantidad</th> <th>Producto</th ><th>Acciones</th></tr></table>");
+    $("."+objeto_dato.idPedido+"").after("<table class='tablaLineasPedido'><tr><th>Linea</th> <th>Cantidad</th> <th>Producto</th ><th>Acciones</th></tr></table>");
     //console.log(objeto_dato);
     $.ajax({
         url: "PHP/lineasPedido/listar_lineas_pedido.php", // no paso ningun dato, solo recojo
@@ -440,7 +443,7 @@ function listar_lineas_pedidos(objeto_dato) {  //Falta que se cierre -----------
         success: function (respuesta) {
             console.log(respuesta); // array de objetos, lo itero y pinto una fila por cada objeto      
             for (var key in respuesta) {
-                $("."+objeto_dato.idPedido+" .tablaLineasPedido").append("<tr class='"+respuesta[key].nlinea+"'><td class='nlinea'>" + respuesta[key].nlinea + "</td><td class='cantidad'>" + respuesta[key].cantidad +
+                $(".tablaLineasPedido").append("<tr class='"+respuesta[key].nlinea+"'><td class='nlinea'>" + respuesta[key].nlinea + "</td><td class='cantidad'>" + respuesta[key].cantidad +
                     "</td> <td class='producto'>" + respuesta[key].idProducto + "</td> <td>" +
                     "<button class='borrarLineaPedido'>Borrar</button></td></tr>");
             }            
@@ -454,11 +457,10 @@ function listar_lineas_pedidos(objeto_dato) {  //Falta que se cierre -----------
 }
 
 function insertar_linea_pedido() {
-
     var objeto_dato = {   //Monto un objeto con los datos del pedido a insertar en la BD
         idPedido: idAux,
         idProducto: $('#idProducto').val(),
-        nlinea: $("#numerolineas").val(),
+        nlinea: 9, //Cambiar manualmente
         cantidad: $("#cantidad").val() 
     };   
     
@@ -484,31 +486,33 @@ function insertar_linea_pedido() {
     });
 }
 
-function borrar_linea_pedido(objeto_dato, fila_borrar){
+function borrar_linea_pedido(objeto_dato, fila_borrar, borra){
     console.log(objeto_dato);
-    $.ajax({
-        
-        url: "PHP/lineasPedido/borrar_linea_pedido.php", // paso el dni del cliente a borrar
-        type: "POST",
-        data: objeto_dato,  
+    if(borra){
+        $.ajax({
+            
+            url: "PHP/lineasPedido/borrar_linea_pedido.php", // paso el dni del cliente a borrar
+            type: "POST",
+            data: objeto_dato,  
 
-        success: function (respuesta) {
-            console.log(respuesta);  // recojo la respuesta, que sera true o false
-            if (respuesta) {
-                console.log(respuesta);
-                var borra = confirm("Desea borrar la linea");
-                if(borra){
-                    fila_borrar.remove(); // si se ha borrado la fila de la bd, borro de la pagina
-                alert("Linea borrada correctamente !!!!");//si es correcta, borro la fila   
-                }                          
-            } else {
-                alert("Error al borrar"); //si no es correcta enseño mensaje
+            success: function (respuesta) {
+                console.log(respuesta);  // recojo la respuesta, que sera true o false
+                if (respuesta) {
+                    console.log(respuesta);
+                    var borra = confirm("Desea borrar la linea");
+                    if(borra){
+                        fila_borrar.remove(); // si se ha borrado la fila de la bd, borro de la pagina
+                    alert("Linea borrada correctamente !!!!");//si es correcta, borro la fila   
+                    }                          
+                } else {
+                    alert("Error al borrar"); //si no es correcta enseño mensaje
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log("La solicitud ha fallado: " + textStatus + errorThrown);
             }
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.log("La solicitud ha fallado: " + textStatus + errorThrown);
-        }
-    });
+        });
+    }
 }
 
 function buscar_nlinea(idAux){

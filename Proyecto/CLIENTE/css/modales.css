@@ -17,5 +17,22 @@
 }
 
 .tablaLineasPedido{
-    background-color: rgb(221, 154, 29);
+    color: black;
 }
+
+.tablaLineasPedido tr{
+    background-color: white;
+    border-collapse: collapse;
+    margin: 10px;
+    border-bottom: 10px solid black;
+}
+
+.tablaLineasPedido td{
+    margin: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 330px;
+}
+
