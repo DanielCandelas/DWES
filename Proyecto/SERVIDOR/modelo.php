@@ -291,7 +291,7 @@
 
         function listarLineasPedido($link){  //CLIENTE
             $consulta = "SELECT * FROM lineaspedidos where idPedido='$this->idPedido'";
-            return  $link->query($consulta);            
+            return $link->query($consulta);            
         }
 
         function borrarLineaPedido($link){ //CLIENTE
@@ -305,9 +305,9 @@
         }
         
         function buscarLinea($link){  //CLIENTE
-            $consulta = "SELECT (MAX)nlinea FROM lineaspedidos where idPedido='$this->idPedido";
+            $consulta = "SELECT MAX(nlinea) AS max_linea FROM lineaspedidos where idPedido='$this->idPedido";
             $result = $link->query($consulta);
-            return $result->fetch_assoc();             
+            return $result->fetch_assoc();                                 
         }
 
     }

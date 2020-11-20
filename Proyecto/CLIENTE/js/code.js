@@ -126,7 +126,8 @@ window.onload = function () {
     });
 
     $(".boton_insertarLinea").click(function(){ 
-        insertar_linea_pedido(idAux);
+        var numero = buscar_nlinea(idAux);
+        insertar_linea_pedido(idAux, numero);
         $(".modalNuevaLineaPedido").hide();                          
     });   
 
@@ -297,7 +298,7 @@ function listar_pedidos() {
     });
 }
 
-function insertar_pedido(aux) {
+function insertar_pedido(aux) {  
     var objeto_dato = {   //Monto un objeto con los datos del pedido a insertar en la BD
         idPedido: aux,
         dniCliente: $('#selectCliente :selected').text(),
@@ -456,11 +457,11 @@ function listar_lineas_pedidos(objeto_dato) {  //Falta que se cierre -----------
     });
 }
 
-function insertar_linea_pedido() {
+function insertar_linea_pedido(numero) { 
     var objeto_dato = {   //Monto un objeto con los datos del pedido a insertar en la BD
         idPedido: idAux,
         idProducto: $('#idProducto').val(),
-        nlinea: 9, //Cambiar manualmente
+        nlinea: numero, //Cambiar manualmente
         cantidad: $("#cantidad").val() 
     };   
     
@@ -517,11 +518,14 @@ function borrar_linea_pedido(objeto_dato, fila_borrar, borra){
 
 function buscar_nlinea(idAux){
     console.log("entra buscar");
+    var objeto_dato = {   //Monto un objeto con los datos del pedido a insertar en la BD
+        idPedido: idAux 
+    };
     $.ajax({
         
         url: "PHP/lineasPedido/buscar_nlinea.php", // paso el idPedido y recogo el max nlinea
         type: "POST",
-        data: idAux,   
+        data: objeto_dato,   
         dataType: "json",  
 
         success: function (respuesta) {
@@ -538,3 +542,5 @@ function buscar_nlinea(idAux){
         }
     });
 }
+
+ //nlinea se recoge de la base de datos, poner el nombre envez de dni en pedidos, poner select en editar pedido
