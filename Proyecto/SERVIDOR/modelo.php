@@ -306,8 +306,7 @@
         
         function buscarLinea($link){  //CLIENTE
             $consulta = "SELECT MAX(nlinea) AS max_linea FROM lineaspedidos where idPedido='$this->idPedido";
-            $result = $link->query($consulta);
-            return $result->fetch_assoc();                                 
+            return $link->query($consulta);                                 
         }
 
     }

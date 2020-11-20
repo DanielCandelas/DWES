@@ -8,7 +8,7 @@
 
     $datos = $pedido->buscarLinea($base->link);
 
-    $result = array('nlinea' => $datos['max_linea']);
+    $result = $datos['max_linea'];
 
     header('Content-Type: application/json');
     echo json_encode($result);
