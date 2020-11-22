@@ -295,7 +295,7 @@
         }
 
         function borrarLineaPedido($link){ //CLIENTE
-            $consulta = "DELETE FROM lineaspedidos where idPedido='$this->idPedido'";
+            $consulta = "DELETE FROM lineaspedidos where idPedido='$this->idPedido' AND nlinea='$this->nlinea'";
             return $link->query($consulta);
         }
 
