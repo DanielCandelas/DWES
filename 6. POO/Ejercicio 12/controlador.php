@@ -9,19 +9,17 @@
         require "vistas/formulario.php";
     }elseif (isset($_POST['enviarArchivo'])) {
 
-        $imagen = new Imagen($_FILES['archivo']['tmp_name'], $_FILES['archivo']['name'], '');        
+        $imagen = new Imagen($_FILES['archivo']['tmp_name'], $_FILES['archivo']['name'], $_FILES['archivo']['type']);        
 
         if ($imagen->esta_cargado()) {
             $directorio = $_POST['directorio'];
             $directorio .= "/";
     
             crear_directorio($directorio);
-    
-            $nombre = $imagen->cambiar_nombre($directorio);
             
-            if ($nombre) {
-                $imagen->mover($nombre);                
-                $mensaje = "el fichero $nombre se ha subido correctamente";
+            if ($imagen->cambiar_nombre($directorio)) {
+                $imagen->mover();                
+                $mensaje = "el fichero se ha subido correctamente";
                 require "vistas/mensaje.php";
             } else {
                 $mensaje = "El archivo tiene que ser del tipo (jpg, png o gif)";

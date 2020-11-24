@@ -32,3 +32,34 @@
             mkdir($directorio);
         }
     }
+
+//FUNCIONES subir.php
+    function estado_archivo($nombre, $directorio){  
+
+        $partes = explode('.', $nombre);    //Deconstruimos el nombre y lo metemos en un array
+        $npartes = count($partes);
+        $ext = $partes[$npartes-1];  
+
+        if ($npartes > 0) {                
+            $nombre = $partes[0];
+            for ($i = 1; $i < $npartes-1; $i++) {   //Contruimos el nombre
+                $nombre .= ".".$partes[$i];
+            }                       
+        }
+
+        if (is_file($directorio.$nombre.".".$ext)) {    //Vemos si el archivo existe en el directorio          
+           
+            $idUnico = uniqid();    
+            $nombre .= "_".$idUnico.".".$ext;   //Nombre 
+        } else {
+            $nombre .= ".".$ext;
+        }
+
+        $nombre_completo = $directorio.$nombre;   //Nombre completo
+
+        if (($ext == 'png') || ($ext == 'jpg') || ($ext == 'gif')) {    //Comprobamos extension           
+            return $nombre_completo;
+        } else {
+            return false;
+        }
+    }
