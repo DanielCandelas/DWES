@@ -3,9 +3,9 @@
 
     function dca($link, $tabla, $clave, $campo){
 
-        $string = "<select>";
+        $string = "<select name='".$clave."'>";
 
-        $consulta = "SELECT ".$campo." FROM ".$tabla." where ".$clave."='".$clave."'";        
+        $consulta = "SELECT ".$campo." FROM ".$tabla;        
         $resultado = $link->query($consulta);
 
         while ($fila = $resultado->fetch_assoc()) {
@@ -14,6 +14,8 @@
             }          
         }       
         $string .= "</select>";
+
+        
 
         return $string;
     }

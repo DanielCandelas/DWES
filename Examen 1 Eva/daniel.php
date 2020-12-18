@@ -7,7 +7,7 @@
             $this->link = new  mysqli('localhost', 'root', '', 'examendaw1eval');
 
             if ($this->link->connect_errno) {
-                echo = "Error al conectar con MYSQL ".$link->connect_error;
+                echo "Error al conectar con MYSQL ".$link->connect_error;
             } else {        
                 $this->link->set_charset('UTF-8');
             }
@@ -43,17 +43,12 @@
 
         function existe($link){
             $consulta = "SELECT idAlquiler FROM alquileres where idAlquiler='$this->idAlquiler'";
-            $result = $link->query($consulta);
-
-            if ($result) {
-                return true;
-            } else {
-                return false;
-            }            
+            $result = $link->query($consulta);  
+            return $result->fetch_assoc();                 
         }
 
         function insertar($link){
-            $consulta = "INSERT INTO alquileres VALUES ('$this->idAlquiler','CURDATE()','$this->pelicula','$this->cliente','$this->empleado')";
+            $consulta = "INSERT INTO alquileres VALUES ($this->idAlquiler, 'CURDATE()', $this->pelicula, $this->cliente, $this->empleado)";
             return $link->query($consulta);
         }
     }

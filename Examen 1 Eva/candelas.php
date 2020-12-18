@@ -1,7 +1,7 @@
 <?php
 
 
-    class Pantalla(){
+    class Pantalla {
 
         private $cabecera =  "Daniel Candelas Arnal";
         private $cuerpo;
@@ -19,9 +19,9 @@
 
         function mostrar(){
 
-            echo $cabecera;
-            echo $cuerpo;
-            echo $pie;
+            echo $this->cabecera."<br><br>";
+            echo $this->cuerpo."<br>";
+            echo $this->pie;
         }
     }
 
