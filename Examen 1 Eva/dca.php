@@ -2,8 +2,6 @@
 
     include "daniel.php";
     include "candelas.php";
-    include "arnal.php";
-    
 
     $link = new Conexion();
     $contenido = new Pantalla(); 
@@ -13,8 +11,6 @@
     if (isset($_POST['enviar'])){              
         $contenido->cuerpo = "<a href='dca.php'>Volver a Intentarlo</a>";  
         $alquiler->idAlquiler = $_POST['idAlquiler'];
-
-        
 
         if ($alquiler->existe($link->link)) {
             $contenido->pie = "Ya existe un alquiler con este ID";
@@ -30,7 +26,7 @@
         $contenido->mostrar();
 
     }else {  
-
+        require "arnal.php";
         $string = "<form action='' method='POST'> 
         Id Alquiler <input type='text' name='idAlquiler'><br>
         Peliculas: ".dca($link->link, 'peliculas', 'idPelicula', 'Titulo')." <br>
