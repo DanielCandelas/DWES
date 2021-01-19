@@ -10,8 +10,8 @@ $respuesta = file_get_contents("http://localhost/DWES-2021/10.%20Servicios%20Web
 echo $respuesta;
 */
 
-$respuesta = json_decode(file_get_contents(""));
+$respuesta = json_decode(file_get_contents("https://driveactivity.googleapis.com/v2/activity:query"));
 
-foreach ($respuesta as $key => $value) {
-    echo $key." - ".$value."<br>";
+foreach ($respuesta as $value) {
+    echo " - ".$value."<br>";
 }
