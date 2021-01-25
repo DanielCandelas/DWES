@@ -109,8 +109,7 @@ class Post
 		try{
 			$fields =$this->getParams($param);
 			$sql = "UPDATE posts SET $fields  WHERE id='$this->id' ";
-			echo $sql;
-    		$result = $link->prepare($sql);   
+			$result = $link->prepare($sql);   
     		$result->execute();
     		
     	}
