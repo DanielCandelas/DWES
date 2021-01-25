@@ -3,11 +3,13 @@
 class Bd	
 {
 	private $link;
-	function __construct() {
+	function __construct()
+	{
 		if (!isset ($this->link)) {
 			try{
 				$this->link= new PDO("mysql:host=localhost;dbname=virtualmarket", "root", "");
-			} catch(PDOException $e) {
+			}
+			catch(PDOException $e){
 				$dato= "¡Error!: " . $e->getMessage() . "<br/>";
  				require "vista/mostrar.php";
  				die();
