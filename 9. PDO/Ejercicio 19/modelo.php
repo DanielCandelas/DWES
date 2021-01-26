@@ -1,17 +1,16 @@
 <?php
 
-class Bd	
-{
+class Bd {
 	private $link;
 	function __construct()
 	{
 		if (!isset ($this->link)) {
 			try{
 				$this->link= new PDO("mysql:host=localhost;dbname=virtualmarket", "root", "");
-			}
-			catch(PDOException $e){
+
+			} catch(PDOException $e) {
 				$dato= "¡Error!: " . $e->getMessage() . "<br/>";
- 				require "vista/mostrar.php";
+ 				require "vista/mensaje.php";
  				die();
  			}
  		}
@@ -21,6 +20,7 @@ class Bd
 		return $this->$var;
 	}
 }
+
 class Cliente {
 
 	private $dniCliente;
@@ -38,7 +38,7 @@ class Cliente {
 		}
 		catch(PDOException $e){
 			$dato= "¡Error!: " . $e->getMessage() . "<br/>";
- 			require "vista/mostrar.php";
+ 			require "vista/mensaje.php";
  			die();
  		}
 	}
@@ -60,7 +60,7 @@ class Cliente {
 		}
 		catch(PDOException $e){
 			$dato= "¡Error!: " . $e->getMessage() . "<br/>";
- 			require "vista/mostrar.php";
+ 			require "vista/mensaje.php";
  			die();
  		}
 	}
@@ -84,7 +84,7 @@ class Cliente {
 		}
 		catch(PDOException $e){
 			$dato= "¡Error!: " . $e->getMessage() . "<br/>";
- 			require "vista/mostrar.php";
+ 			require "vista/mensaje.php";
  			die();
  		}
 	}
@@ -96,7 +96,7 @@ class Cliente {
 		}
 		catch(PDOException $e){
 			$dato= "¡Error!: " . $e->getMessage() . "<br/>";
-			require "vista/mostrar.php";
+			require "vista/mensaje.php";
 			die();
 		}
 	}
@@ -109,7 +109,7 @@ class Cliente {
 		}
 		catch(PDOException $e){
 			$dato= "¡Error!: " . $e->getMessage() . "<br/>";
-			require "vista/mostrar.php";
+			require "vista/mensaje.php";
 			die();
 		}
 	}

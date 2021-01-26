@@ -11,7 +11,7 @@ class Bd
 			}
 			catch(PDOException $e){
 				$dato= "¡Error!: " . $e->getMessage() . "<br/>";
- 				require "vista/mostrar.php";
+ 				require "vista/mensaje.php";
  				die();
  			}
  		}
@@ -46,7 +46,7 @@ class Cliente
 			}
 			catch(PDOException $e){
 				$dato= "¡Error!: " . $e->getMessage() . "<br/>";
- 				require "vista/mostrar.php";
+ 				require "vista/mensaje.php";
  				die();
  			}
 		}
