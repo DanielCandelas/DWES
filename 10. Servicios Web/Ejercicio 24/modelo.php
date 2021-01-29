@@ -20,3 +20,4 @@ class Bd {
 		return $this->$var;
 	}
 }
+
