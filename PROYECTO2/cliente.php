@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT')
 
   if(isset($_GET['dniCliente'])){
     $input = $_GET;
-    $cli= new Cliente($_GET['dniCliente'], '', '', '', '');
+    $cli= new Cliente($_GET['dniCliente'],'','','','');
     $error=$cli->modificarParcial($base->link,$input);
     header("HTTP/1.1 200 OK");
     echo $_GET['dniCliente'];
