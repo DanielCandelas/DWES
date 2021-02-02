@@ -1,7 +1,7 @@
 <?php
 
 function lista ($link,$url,$tabla, $nomid, $mostrar){
-	$url="http://localhost/ej25/".$url.$tabla;
+	$url="http://localhost/DWES-2021/10-Serviciosweb/ej25/".$url.$tabla;
     $consulta=json_decode(file_get_contents($url),TRUE);
     $string= "<select name='$tabla'>";
     foreach ($consulta as $fila) {
