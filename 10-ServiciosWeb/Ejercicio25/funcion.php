@@ -6,7 +6,7 @@ function lista ($link, $url, $tabla, $nomid, $mostrar){
 
     $string= "<select name='$tabla'>";
 
-    foreach($consulta as $key => $fila){
+    foreach($consulta as $fila){
        $string.= "<option value='".$fila[$nomid]."'>".$fila[$mostrar]."</option>";
     }
     $string.= "</select>";
