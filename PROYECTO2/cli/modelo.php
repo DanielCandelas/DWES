@@ -98,8 +98,7 @@ class Cliente {
 				$consulta="UPDATE clientes SET nombre='$this->nombre',  direccion='$this->direccion',  email='$this->email', pwd='$this->pwd' WHERE dniCliente='$this->dniCliente'";
 				$result=$link->prepare($consulta);
 				return $result->execute();
-			}
-			catch(PDOException $e){
+			} catch(PDOException $e){
 				$dato= "¡Error!: " . $e->getMessage() . "<br/>";
  				return $dato;
  				die();
