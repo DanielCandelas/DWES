@@ -22,116 +22,116 @@ class Bd {
 	}
 }
 
-class Cliente {
-		private $dniCliente;
-		private $nombre;
-		private $direccion;
-		private $email;
-		private $pwd;
+class lineasPedido{
 
-		static function getAll($link) {
-			try{
-				$consulta="SELECT * FROM clientes";
-				$result=$link->prepare($consulta);
-				$result->execute();
-				return $result;
-			}
-			catch(PDOException $e){
-				$dato= "¡Error!: " . $e->getMessage() . "<br/>";
- 				return $dato;
- 				die();
- 			}
-		}
+	private $idPedido;
+	private $nlinea;
+	private $idProducto;
+	private $cantidad; 
 
-		function __construct($dni, $nombre, $direccion,$email,$pwd) {
-			$this->dniCliente=$dni;
-			$this->nombre=$nombre;
-			$this->direccion=$direccion;
-			$this->email=$email;
-			$this->pwd=$pwd;
-		}
+	function __construct($idPedido, $nlinea, $idProducto, $cantidad){
+		$this->idPedido = $idPedido;
+		$this->nlinea = $nlinea;
+		$this->idProducto = $idProducto;
+		$this->cantidad = $cantidad;
+	}
 
-		function __get($var) {
-			return $this->$var;
-		}
+	function __get($var) {
+		return $this->$var;
+	}
 
-		function buscar ($link) {
-			try{
-				$consulta="SELECT * FROM clientes where dniCliente='$this->dniCliente'";
-				$result=$link->prepare($consulta);
-				$result->execute();
-				return $result->fetch(PDO::FETCH_ASSOC);
-			}
-			catch(PDOException $e){
-				$dato= "¡Error!: " . $e->getMessage() . "<br/>";
- 				return $dato;
- 				die();
- 			}
+	function __set($property, $value){
+		if(property_exists($this, $property)) {
+			$this->$property = $value;
 		}
+	}
 
-		function insertar ($link) {
-			try {
-				$consulta="INSERT INTO clientes VALUES (:dniCliente,:nombre,:direccion,:email,:pwd)";
-				$result=$link->prepare($consulta);
-				$result->bindParam(':dniCliente',$dniCliente);
-				$result->bindParam(':nombre',$nombre);
-				$result->bindParam(':direccion',$direccion);
-				$result->bindParam(':email',$email);
-				$result->bindParam(':pwd',$pwd);
-				$dniCliente=$this->dniCliente;
-				$nombre=$this->nombre;
-				$direccion=$this->direccion;
-				$email=$this->email;
-				$pwd=$this->pwd;
-				$result->execute();
-				return $result;
-			} catch(PDOException $e){
-				$dato= "¡Error!: " . $e->getMessage() . "<br/>";
- 				return $dato;
- 				die();
- 			}
+	static function getAll($link) {
+		try{
+			$consulta="SELECT * FROM lineaspedidos";
+			$result=$link->prepare($consulta);
+			$result->execute();
+			return $result;
+		} catch(PDOException $e){
+			$dato= "¡Error!: " . $e->getMessage() . "<br/>";
+			return $dato;
+			die();
 		}
+	}	
 
-		
-		function modificar ($link){
-			try{
-				$consulta="UPDATE clientes SET nombre='$this->nombre',  direccion='$this->direccion',  email='$this->email', pwd='$this->pwd' WHERE dniCliente='$this->dniCliente'";
-				$result=$link->prepare($consulta);
-				return $result->execute();
-			} catch(PDOException $e){
-				$dato= "¡Error!: " . $e->getMessage() . "<br/>";
- 				return $dato;
- 				die();
- 			}
+	static function listarLineasPedido($link) {
+		try{
+			$consulta="SELECT * FROM lineaspedidos where idPedido='$this->idPedido'";
+			$result=$link->prepare($consulta);
+			$result->execute();
+			return $result->fetch(PDO::FETCH_ASSOC);
+		} catch(PDOException $e){
+			$dato= "¡Error!: " . $e->getMessage() . "<br/>";
+			return $dato;
+			die();
 		}
+	}
 
-		function modificarParcial ($link,$input){
-			try{
-				$fields = getParams($input);
-				$consulta = "
-          		UPDATE clientes
-          		SET $fields
-          		WHERE dniCliente='$this->dniCliente'";
-          		$result=$link->prepare($consulta);
-				bindAllValues($result,$input);
-				$result->execute();
-				return $result;
-			} catch(PDOException $e){
-				$dato= "¡Error!: " . $e->getMessage() . "<br/>";
- 				return $dato;
- 				die();
- 			}
+	static function buscarLineasPedido($link) {
+		try{
+			$consulta="SELECT * FROM lineaspedidos where idPedido='$this->idPedido' AND nlinea='$this->nlinea'";
+			$result=$link->prepare($consulta);
+			$result->execute();
+			return $result->fetch(PDO::FETCH_ASSOC);
+		} catch(PDOException $e){
+			$dato= "¡Error!: " . $e->getMessage() . "<br/>";
+			return $dato;
+			die();
 		}
+	}
 
-		function borrar ($link){
-			try{
-				$consulta="DELETE FROM clientes where dniCliente='$this->dniCliente'";
-				$result=$link->prepare($consulta);
-				return $result->execute();
-			} catch(PDOException $e){
-				$dato= "¡Error!: " . $e->getMessage() . "<br/>";
- 				return $dato;
- 				die();
- 			}
-		}
+	function insertarLineasPedido($link){
+		$consulta="INSERT INTO lineaspedidos VALUES (:idPedido,:nlinea,:idProducto,:cantidad)";
+					$result=$link->prepare($consulta);
+					$result->bindParam(':idPedido',$idPedido);
+					$result->bindParam(':nlinea',$nlinea);
+					$result->bindParam(':idProducto',$idProducto);
+					$result->bindParam(':cantidad',$cantidad);
+					$idPedido=$this->idPedido;
+					$nlinea=$this->nlinea;
+					$idProducto=$this->idProducto;
+					$cantidad=$this->cantidad;
+					$result->execute();
+					return $result;
+			
+		/*
+		$consulta = "INSERT INTO lineaspedidos VALUES ($this->idPedido, $this->nlinea, $this->idProducto, $this->cantidad)"; 
+		$result=$link->prepare($consulta);
+		$result->execute();
+		return $result; */
+	}	
+
+	function borrarLineaPedido($link){ 		
+		try{
+			$consulta = "DELETE FROM lineaspedidos where idPedido='$this->idPedido' AND nlinea='$this->nlinea'";
+			$result=$link->prepare($consulta);
+			return $result->execute();
+		} catch(PDOException $e){+
+			$dato= "¡Error!: " . $e->getMessage() . "<br/>";
+			 return $dato;
+			 die();
+		 }
+	}	
+
+	function calcular_nLinea($link){
+        try{
+            $consulta="SELECT Max(nlinea) as nlinea FROM lineaspedidos where idPedido='$this->idPedido'";
+            $result=$link->prepare($consulta);
+            $result->execute(); 
+            foreach ($result->fetch(PDO::FETCH_ASSOC) as $key => $value) {
+                    return $value+1;
+            }
+        }
+        catch(PDOException $e){
+            $dato= "¡Error!: " . $e->getMessage() . "<br/>";
+            return $dato;
+            die();
+        }
+
+    }
 }

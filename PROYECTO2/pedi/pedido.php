@@ -32,11 +32,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
 // Crear un nuevo post
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
-    $pedido = new Pedidos($_POST['idPedido'],$_POST['fecha'],$_POST['dniCliente']);
+    $pedido = new Pedidos('',$_POST['fecha'],$_POST['dniCliente']);
+    $pedido->idPedido=$pedido->calcularIdPedido($base->link);
     if(!$pedido->buscarPedidos($base->link)){
       $pedido->insertarPedido($base->link);
       header("HTTP/1.1 200 OK");
-      echo json_encode($_POST['idPedido']);
+      echo json_encode($pedido->idPedido);
       exit();
 	 }
 }

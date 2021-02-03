@@ -72,7 +72,7 @@ class Pedidos {
 
 	function insertarPedido ($link) {
 		try {
-			/*
+			
 				$consulta="INSERT INTO pedidos (idPedido, fecha, dniCliente) VALUES (:idPedido, :fecha, :dniCliente)";
 				$result=$link->prepare($consulta);
 				$result->bindParam(':idPedido',$idPedido);
@@ -83,13 +83,13 @@ class Pedidos {
 				$dniCliente=$this->dniCliente;
 				$result->execute();
 				return $result;
-			*/
 			
+			/*
 				$consulta="INSERT INTO pedidos (idPedido, fecha, dniCliente) VALUES ($this->idPedido, $this->fecha, $this->dniCliente)";
 				$result=$link->prepare($consulta);
 				$result->execute();
 				return $result;
-			
+			*/
 		} catch(PDOException $e) {
 			$dato= "¡Error!: " . $e->getMessage() . "<br/>";
 			return $dato;
@@ -125,9 +125,9 @@ class Pedidos {
 		try{
 			$fields = getParams($input);
 			$consulta = "
-			  UPDATE clientes
+			  UPDATE pedidos
 			  SET $fields
-			  WHERE dniCliente='$this->dniCliente'";
+			  WHERE idPedido='$this->idPedido'";
 			  $result=$link->prepare($consulta);
 			bindAllValues($result,$input);
 			$result->execute();
@@ -138,18 +138,20 @@ class Pedidos {
 			die();
 		}
 	}
-
-	/*
-	function calcularId($link){
-		$consulta = "SELECT idPedido FROM pedidos";
-		$resultado = $link->query($consulta);
-
-		//recorremos el array fila que contiene los id que hemos consegudio con la consulta y devolvemos el mayor
-		while ($fila = $resultado->fetch_assoc()){
-			foreach ($fila as $value) {
-				$id_mayor = $value;
-			}		
-		}
-		return $id_mayor;             
-	} */
+	
+	function calcularIdPedido($link){
+        try{
+            $consulta="SELECT Max(idPedido) as idPedido FROM pedidos";
+            $result=$link->prepare($consulta);
+            $result->execute(); 
+            foreach ($result->fetch(PDO::FETCH_ASSOC) as $key => $value) {
+                    return $value+1;
+            }
+        }
+        catch(PDOException $e){
+            $dato= "¡Error!: " . $e->getMessage() . "<br/>";
+            return $dato;
+            die();
+        }
+    }
 }
