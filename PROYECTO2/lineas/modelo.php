@@ -57,7 +57,7 @@ class lineasPedido{
 			return $dato;
 			die();
 		}
-	}	
+	}
 
 	function listarLineasPedido($link) {
 		try{
@@ -70,7 +70,7 @@ class lineasPedido{
 			return $dato;
 			die();
 		}
-	}
+	} 
 
 	function buscarLineasPedido($link) {
 		try{
