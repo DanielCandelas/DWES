@@ -3,25 +3,25 @@
 include "utils.php";
 include "modelo.php";
 
-$base= new Bd();
+$base = new Bd();
 
 /*
   listar todos los posts o solo uno
  */
 if ($_SERVER['REQUEST_METHOD'] == 'GET')
 {
-    if (isset($_GET['dniCliente']))
+    if (isset($_GET['idPedido']))
     {
       //Mostrar un post
-      $cli= new Cliente($_GET['dniCliente'],'','','','');
-      $dato=$cli->buscar($base->link);
+      $pedido = new Pedidos($_GET['idPedido'], '','');
+      $dato = $pedido->buscarPedidos($base->link);
       header("HTTP/1.1 200 OK");
       echo json_encode($dato);
       exit();
 	  }
     else {
       //Mostrar lista de post
-      $dato=Cliente::getAll($base->link);
+      $dato = Pedidos::getAll($base->link);
       $dato->setFetchMode(PDO::FETCH_ASSOC);
       header("HTTP/1.1 200 OK");
       echo json_encode($dato->fetchAll());
@@ -32,11 +32,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
 // Crear un nuevo post
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
-    $cli= new Cliente($_POST['dniCliente'],$_POST['nombre'],$_POST['direccion'],$_POST['email'],$_POST['pwd']);
-    if(!$cli->buscar($base->link)){
-      $cli->insertar($base->link);
+    $pedido = new Pedidos($_POST['idPedido'],$_POST['fecha'],$_POST['dniCliente']);
+    if(!$pedido->buscarPedidos($base->link)){
+      $pedido->insertarPedido($base->link);
       header("HTTP/1.1 200 OK");
-      echo json_encode($_POST['dniCliente']);
+      echo json_encode($_POST['idPedido']);
       exit();
 	 }
 }
@@ -44,12 +44,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 //Borrar
 if ($_SERVER['REQUEST_METHOD'] == 'DELETE')
 {
-	$dniCliente = $_GET['dniCliente'];
-  $cli= new Cliente($dniCliente,'','','','');
-  if($dato=$cli->borrar($base->link)){
-	 header("HTTP/1.1 200 OK");
-   	 echo json_encode($dniCliente);
-	 exit();
+	$idPedido = $_GET['idPedido'];
+  $pedido = new Pedidos($idPedido,'','');
+  if($dato=$pedido->borrarPedido($base->link)){
+	  header("HTTP/1.1 200 OK");
+   	echo json_encode($idPedido);
+	  exit();
   }
 }
 
@@ -57,12 +57,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'DELETE')
 if ($_SERVER['REQUEST_METHOD'] == 'PUT')
 {
 
-  if(isset($_GET['dniCliente'])){
+  if(isset($_GET['idPedido'])){
     $input = $_GET;
-    $cli= new Cliente($_GET['dniCliente'],'','','','');
-    $error=$cli->modificarParcial($base->link,$input);
+    $pedido= new Pedidos($_GET['idPedido'],'','');
+    $error=$pedido->modificarPedidoParcial($base->link,$input);
     header("HTTP/1.1 200 OK");
-    echo $_GET['dniCliente'];
+    echo $_GET['idPedido'];
     exit();
   }
 }

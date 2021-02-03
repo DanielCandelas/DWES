@@ -71,20 +71,27 @@ class Cliente {
 
 		function insertar ($link) {
 			try {
-				$consulta="INSERT INTO clientes VALUES (:dniCliente,:nombre,:direccion,:email,:pwd)";
-				$result=$link->prepare($consulta);
-				$result->bindParam(':dniCliente',$dniCliente);
-				$result->bindParam(':nombre',$nombre);
-				$result->bindParam(':direccion',$direccion);
-				$result->bindParam(':email',$email);
-				$result->bindParam(':pwd',$pwd);
-				$dniCliente=$this->dniCliente;
-				$nombre=$this->nombre;
-				$direccion=$this->direccion;
-				$email=$this->email;
-				$pwd=$this->pwd;
-				$result->execute();
-				return $result;
+					$consulta="INSERT INTO clientes VALUES (:dniCliente,:nombre,:direccion,:email,:pwd)";
+					$result=$link->prepare($consulta);
+					$result->bindParam(':dniCliente',$dniCliente);
+					$result->bindParam(':nombre',$nombre);
+					$result->bindParam(':direccion',$direccion);
+					$result->bindParam(':email',$email);
+					$result->bindParam(':pwd',$pwd);
+					$dniCliente=$this->dniCliente;
+					$nombre=$this->nombre;
+					$direccion=$this->direccion;
+					$email=$this->email;
+					$pwd=$this->pwd;
+					$result->execute();
+					return $result;
+
+				/*
+					$consulta="INSERT INTO clientes VALUES ($this->dniCliente, $this->nombre, $this->direccion, $this->email, $this->pwd)";
+					$result=$link->prepare($consulta);
+					$result->execute();
+					return $result; 
+				*/
 			} catch(PDOException $e){
 				$dato= "¡Error!: " . $e->getMessage() . "<br/>";
  				return $dato;

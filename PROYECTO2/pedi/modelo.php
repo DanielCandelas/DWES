@@ -72,10 +72,24 @@ class Pedidos {
 
 	function insertarPedido ($link) {
 		try {
-			$consulta="INSERT INTO pedidos (idPedido, fecha, dniCliente) VALUES ($this->idPedido, $this->fecha, $this->dniCliente)";
-			$result=$link->prepare($consulta);
-			$result->execute();
-			return $result;
+			/*
+				$consulta="INSERT INTO pedidos (idPedido, fecha, dniCliente) VALUES (:idPedido, :fecha, :dniCliente)";
+				$result=$link->prepare($consulta);
+				$result->bindParam(':idPedido',$idPedido);
+				$result->bindParam(':fecha',$fecha);
+				$result->bindParam(':dniCliente',$dniCliente);
+				$idPedido=$this->idPedido;
+				$fecha=$this->fecha;
+				$dniCliente=$this->dniCliente;
+				$result->execute();
+				return $result;
+			*/
+			
+				$consulta="INSERT INTO pedidos (idPedido, fecha, dniCliente) VALUES ($this->idPedido, $this->fecha, $this->dniCliente)";
+				$result=$link->prepare($consulta);
+				$result->execute();
+				return $result;
+			
 		} catch(PDOException $e) {
 			$dato= "¡Error!: " . $e->getMessage() . "<br/>";
 			return $dato;
