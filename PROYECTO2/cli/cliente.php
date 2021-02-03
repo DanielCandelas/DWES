@@ -10,7 +10,7 @@ $base= new Bd();
  */
 if ($_SERVER['REQUEST_METHOD'] == 'GET')
 {
-    if (isset($_GET['dniCliente'])) //hola
+    if (isset($_GET['dniCliente'])) 
     {
       //Mostrar un post
       $cli= new Cliente($_GET['dniCliente'],'','','','');

@@ -22,7 +22,7 @@ class Bd {
 	}
 }
 
-class Cliente {
+class Cliente { 
 		private $dniCliente;
 		private $nombre;
 		private $direccion;
@@ -55,7 +55,7 @@ class Cliente {
 			return $this->$var;
 		}
 
-		function buscar ($link) {
+		function buscar ($link) { 
 			try{
 				$consulta="SELECT * FROM clientes where dniCliente='$this->dniCliente'";
 				$result=$link->prepare($consulta);
