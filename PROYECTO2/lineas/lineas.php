@@ -27,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
 	  }
 }
 
+
 // Crear un nuevo post
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {

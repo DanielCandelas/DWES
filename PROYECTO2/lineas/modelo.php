@@ -59,12 +59,12 @@ class lineasPedido{
 		}
 	}	
 
-	static function listarLineasPedido($link) {
+	function listarLineasPedido($link) {
 		try{
-			$consulta="SELECT * FROM lineaspedidos where idPedido='$this->idPedido'";
+			$consulta = "SELECT * FROM lineaspedidos where idPedido='$this->idPedido'";
 			$result=$link->prepare($consulta);
 			$result->execute();
-			return $result->fetch(PDO::FETCH_ASSOC);
+			return $result;
 		} catch(PDOException $e){
 			$dato= "¡Error!: " . $e->getMessage() . "<br/>";
 			return $dato;
@@ -72,7 +72,7 @@ class lineasPedido{
 		}
 	}
 
-	static function buscarLineasPedido($link) {
+	function buscarLineasPedido($link) {
 		try{
 			$consulta="SELECT * FROM lineaspedidos where idPedido='$this->idPedido' AND nlinea='$this->nlinea'";
 			$result=$link->prepare($consulta);
