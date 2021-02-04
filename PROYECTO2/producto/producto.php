@@ -10,9 +10,8 @@ $base= new Bd();
  */
 if ($_SERVER['REQUEST_METHOD'] == 'GET')
 {
-    if (isset($_GET['dniCliente']))
+    if (isset($_GET['campos']))
     {
-      //Mostrar un post
       $cli= new Cliente($_GET['dniCliente'],'','','','');
       $dato=$cli->buscar($base->link);
       header("HTTP/1.1 200 OK");
