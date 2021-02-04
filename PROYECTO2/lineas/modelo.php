@@ -64,7 +64,8 @@ class lineasPedido{
 			$consulta = "SELECT * FROM lineaspedidos where idPedido='$this->idPedido'";
 			$result=$link->prepare($consulta);
 			$result->execute();
-			return $result->fetch(PDO::FETCH_ASSOC);
+			$result->setFetchMode(PDO::FETCH_ASSOC);
+			return $result->fetchAll();
 		} catch(PDOException $e){
 			$dato= "¡Error!: " . $e->getMessage() . "<br/>";
 			return $dato;
