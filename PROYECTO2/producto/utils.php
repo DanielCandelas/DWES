@@ -6,7 +6,7 @@
     $filterParams = [];
 
     foreach($input as $param => $value) {
-        $filterParams[] = "$param=:$param";
+      $filterParams[] = "$param=:$param";
     }
     
     return implode(", ", $filterParams);
@@ -22,5 +22,25 @@
 		return $statement;
   }
 
+  function getCampoValor($input) {
 
+    $filterParams = "";
+
+    foreach($input as $param => $value) {      
+      $filterParams = $param."='$value'";
+    }
+
+    return $filterParams;
+	}
+
+  function getUrl($input) {
+
+    $filterParams = "";
+
+    foreach($input as $param => $value) {      
+      $filterParams = $param;
+    }
+
+    return $filterParams;
+	}
 ?>

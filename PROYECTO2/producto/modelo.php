@@ -34,21 +34,6 @@ class Productos {
 		private $unidades;
 		private $volumen;
 		private $precio;
-		
-
-		static function getAll($link) {
-			try{
-				$consulta="SELECT * FROM productos";
-				$result=$link->prepare($consulta);
-				$result->execute();
-				return $result;
-			}
-			catch(PDOException $e){
-				$dato= "¡Error!: " . $e->getMessage() . "<br/>";
- 				return $dato;
- 				die();
- 			}
-		}
 
 		function __construct($idProducto, $nombre, $origen, $foto, $marca, $categoria, $peso, $unidades, $volumen, $precio) {
 			$this->idProducto=$idProducto;
@@ -65,9 +50,29 @@ class Productos {
 
 		function __get($var) {
 			return $this->$var;
-		}		
+		}
+	
+		function __set($property, $value){
+			if(property_exists($this, $property)) {
+				$this->$property = $value;
+			}
+		}	
+		
+		static function getAll($link) {
+			try{
+				$consulta="SELECT * FROM productos";
+				$result=$link->prepare($consulta);
+				$result->execute();
+				return $result;
+			}
+			catch(PDOException $e){
+				$dato= "¡Error!: " . $e->getMessage() . "<br/>";
+ 				return $dato;
+ 				die();
+ 			}
+		}
 
-		function buscar ($link) {
+		function buscarProductos ($link) {
 			try{
 				$consulta="SELECT * FROM productos where idProducto='$this->idProducto'";
 				$result=$link->prepare($consulta);
@@ -81,13 +86,14 @@ class Productos {
  			}
 		}
 
-		function insertar ($link) {
+		function insertarProductos ($link) {
 			try {
-				$consulta="INSERT INTO productos (idProducto, nombre, origen, marca, categoria, peso, unidades, volumen, precio) VALUES (:idProducto, :nombre, :origen, :marca, :categoria, :peso, :unidades, :volumen, :precio)";
+				$consulta="INSERT INTO productos VALUES (:idProducto, :nombre, :origen, :foto, :marca, :categoria, :peso, :unidades, :volumen, :precio)";
 				$result=$link->prepare($consulta);
 				$result->bindParam(':idProducto',$idProducto);
 				$result->bindParam(':nombre',$nombre);
 				$result->bindParam(':origen',$origen);
+				$result->bindParam(':foto',$foto);
 				$result->bindParam(':marca',$marca);
 				$result->bindParam(':categoria',$categoria);
 				$result->bindParam(':peso',$peso);
@@ -97,6 +103,7 @@ class Productos {
 				$idProducto=$this->idProducto;
 				$nombre=$this->nombre;
 				$origen=$this->origen;
+				$foto=$this->foto;
 				$marca=$this->marca;
 				$categoria=$this->categoria;
 				$peso=$this->peso;
@@ -111,10 +118,22 @@ class Productos {
  				die();
  			}
 		}
-		
-		function modificar ($link){
+
+		function borrarProductos ($link){
 			try{
-				$consulta="UPDATE productos SET nombre='$this->nombre', origen='$this->origen', marca='$this->marca', categoria='$this->categoria', peso='$this->peso, unidades='$this->unidades, volumen='$this->volumen, precio='$this->precio WHERE idProducto='$this->idProducto'";
+				$consulta="DELETE FROM productos where idProducto='$this->idProducto'";
+				$result=$link->prepare($consulta);
+				return $result->execute();
+			} catch(PDOException $e){
+				$dato= "¡Error!: " . $e->getMessage() . "<br/>";
+ 				return $dato;
+ 				die();
+ 			}
+		}
+		
+		function modificarProductos ($link){
+			try{
+				$consulta="UPDATE productos SET nombre='$this->nombre', origen='$this->origen', foto='$this->foto', marca='$this->marca', categoria='$this->categoria', peso='$this->peso, unidades='$this->unidades, volumen='$this->volumen, precio='$this->precio WHERE idProducto='$this->idProducto'";
 				$result=$link->prepare($consulta);
 				return $result->execute();
 			} catch(PDOException $e){
@@ -124,7 +143,7 @@ class Productos {
  			}
 		}
 
-		function modificarParcial ($link,$input){
+		function modificarProductosParcial ($link,$input){
 			try{
 				$fields = getParams($input);
 				$consulta = "
@@ -142,23 +161,45 @@ class Productos {
  			}
 		}
 
-		function borrar ($link){
+		function calcular_nProducto($link){
 			try{
-				$consulta="DELETE FROM productos where idProducto='$this->idProducto'";
+				$consulta="SELECT Max(idProducto) as idProducto FROM productos";
 				$result=$link->prepare($consulta);
-				return $result->execute();
-			} catch(PDOException $e){
+				$result->execute(); 
+				foreach ($result->fetch(PDO::FETCH_ASSOC) as $key => $value) {
+					return $value+1;
+				}
+			}
+			catch(PDOException $e){
 				$dato= "¡Error!: " . $e->getMessage() . "<br/>";
- 				return $dato;
- 				die();
- 			}
+				return $dato;
+				die();
+			}
 		}
 
-		function columnas ($link) {
+		function nombreCampos ($link) {
 			try{
 				$result = $link->prepare("DESCRIBE productos");
 				$result->execute();
 				return $table_fields = $result->fetchAll(PDO::FETCH_COLUMN);				 
+			}
+			catch(PDOException $e){
+				$dato= "¡Error!: " . $e->getMessage() . "<br/>";
+ 				return $dato;
+ 				die();
+ 			}
+		}	
+
+		function campoValor ($link,$input) {
+			try{
+				$fields = getCampoValor($input);
+				$consulta="SELECT * FROM productos WHERE $fields";
+				$result=$link->prepare($consulta);
+				$result->execute();
+				//return $result->fetch(PDO::FETCH_ASSOC);
+				$result->setFetchMode(PDO::FETCH_ASSOC);
+				return $result->fetchAll();
+				//return $result;
 			}
 			catch(PDOException $e){
 				$dato= "¡Error!: " . $e->getMessage() . "<br/>";

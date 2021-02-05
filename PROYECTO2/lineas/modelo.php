@@ -133,6 +133,5 @@ class lineasPedido{
             return $dato;
             die();
         }
-
     }
 }

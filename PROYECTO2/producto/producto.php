@@ -5,37 +5,57 @@ include "modelo.php";
 
 $base= new Bd();
 
-/*
-  listar todos los posts o solo uno
- */
+
 if ($_SERVER['REQUEST_METHOD'] == 'GET')
-{
-    if (isset($_GET['campos']))
+{      
+
+    $campo = getUrl($_GET);
+    echo json_encode($campo);
+  if(isset($_GET[$campo])){
+    $input = $_GET;
+    $pro = new Productos('','','','','','','','','','','','');
+    $dato=$pro->campoValor($base->link,$input);
+    header("HTTP/1.1 200 OK");
+    echo json_encode($dato);
+    exit();
+  } 
+
+  if (isset($_GET['campos']))
     {
-      $cli= new Cliente($_GET['dniCliente'],'','','','');
-      $dato=$cli->buscar($base->link);
+      $pro = new Productos('','','','','','','','','','','','');
+      $dato = $pro->nombreCampos($base->link);
+      header("HTTP/1.1 200 OK");
+      echo json_encode($dato);
+      exit();
+	  }
+  
+  if (isset($_GET['idProducto']))
+    {
+      $pro = new Productos($_GET['idProducto'],'', '','','','','','','','','','');
+      $dato = $pro->buscarProductos($base->link);
       header("HTTP/1.1 200 OK");
       echo json_encode($dato);
       exit();
 	  }
     else {
-      //Mostrar lista de post
-      $dato=Cliente::getAll($base->link);
+      $dato = Productos::getAll($base->link);
       $dato->setFetchMode(PDO::FETCH_ASSOC);
       header("HTTP/1.1 200 OK");
       echo json_encode($dato->fetchAll());
       exit();
-	}
+	}    
 }
 
 // Crear un nuevo post
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
-    $cli= new Cliente($_POST['dniCliente'],$_POST['nombre'],$_POST['direccion'],$_POST['email'],$_POST['pwd']);
-    if(!$cli->buscar($base->link)){
-      $cli->insertar($base->link);
+    $pro = new Productos('',$_POST['nombre'],$_POST['origen'],$_POST['foto'],$_POST['marca'],$_POST['categoria'],
+    $_POST['peso'],$_POST['unidades'],$_POST['volumen'],$_POST['precio']);
+    $pro->idProducto=$pro->calcular_nProducto($base->link);
+    if(!$pro->buscarProductos($base->link)){
+      $pro->insertarProductos($base->link);
       header("HTTP/1.1 200 OK");
-      echo json_encode($_POST['dniCliente']);
+      echo json_encode($pro->idProducto);
       exit();
 	 }
 }
@@ -43,12 +63,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 //Borrar
 if ($_SERVER['REQUEST_METHOD'] == 'DELETE')
 {
-	$dniCliente = $_GET['dniCliente'];
-  $cli= new Cliente($dniCliente,'','','','');
-  if($dato=$cli->borrar($base->link)){
-	 header("HTTP/1.1 200 OK");
-   	 echo json_encode($dniCliente);
-	 exit();
+	$idProducto = $_GET['idProducto'];
+  $pro = new Productos($idProducto,'','','','','','','','','','','');
+  if($dato=$pro->borrarProductos($base->link)){
+	  header("HTTP/1.1 200 OK");
+   	echo json_encode($idProducto);
+	  exit();
   }
 }
 
@@ -56,12 +76,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'DELETE')
 if ($_SERVER['REQUEST_METHOD'] == 'PUT')
 {
 
-  if(isset($_GET['dniCliente'])){
+  if(isset($_GET['idProducto'])){
     $input = $_GET;
-    $cli= new Cliente($_GET['dniCliente'],'','','','');
-    $error=$cli->modificarParcial($base->link,$input);
+    $pro = new Productos($_GET['idProducto'],'','','','','','','','','','','');
+    $error=$pro->modificarProductosParcial($base->link,$input);
     header("HTTP/1.1 200 OK");
-    echo $_GET['dniCliente'];
+    echo $_GET['idProducto'];
     exit();
   }
 }
