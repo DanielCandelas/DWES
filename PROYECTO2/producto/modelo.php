@@ -196,10 +196,8 @@ class Productos {
 				$consulta="SELECT * FROM productos WHERE $fields";
 				$result=$link->prepare($consulta);
 				$result->execute();
-				//return $result->fetch(PDO::FETCH_ASSOC);
 				$result->setFetchMode(PDO::FETCH_ASSOC);
 				return $result->fetchAll();
-				//return $result;
 			}
 			catch(PDOException $e){
 				$dato= "¡Error!: " . $e->getMessage() . "<br/>";

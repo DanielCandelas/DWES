@@ -9,7 +9,7 @@ $base= new Bd();
 if ($_SERVER['REQUEST_METHOD'] == 'GET')
 {      
   $campo = getUrl($_GET);
-  
+//Variables de sesion pasar a controlador url
   if (isset($_GET['campos']))
     {
       $pro = new Productos('','','','','','','','','','','','');
@@ -30,16 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
         header("HTTP/1.1 200 OK");
         echo json_encode($dato->fetchAll());
         exit();
-      } 
-  
-  /* if (isset($_GET['idProducto']))
-    {
-      $pro = new Productos($_GET['idProducto'],'', '','','','','','','','','','');
-      $dato = $pro->buscarProductos($base->link);
-      header("HTTP/1.1 200 OK");
-      echo json_encode($dato);
-      exit();
-	  } */    
+      }    
 }
 
 // Crear un nuevo post
