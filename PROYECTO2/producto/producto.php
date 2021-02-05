@@ -9,16 +9,21 @@ $base= new Bd();
 if ($_SERVER['REQUEST_METHOD'] == 'GET')
 {      
 
-    $campo = getUrl($_GET);
-    echo json_encode($campo);
+  $campo = getUrl($_GET);
   if(isset($_GET[$campo])){
-    $input = $_GET;
-    $pro = new Productos('','','','','','','','','','','','');
-    $dato=$pro->campoValor($base->link,$input);
-    header("HTTP/1.1 200 OK");
-    echo json_encode($dato);
-    exit();
-  } 
+      $input = $_GET;
+      $pro = new Productos('','','','','','','','','','','','');
+      $dato=$pro->campoValor($base->link,$input);
+      header("HTTP/1.1 200 OK");
+      echo json_encode($dato);
+      exit();
+    } else {
+      $dato = Productos::getAll($base->link);
+      $dato->setFetchMode(PDO::FETCH_ASSOC);
+      header("HTTP/1.1 200 OK");
+      echo json_encode($dato->fetchAll());
+      exit();
+    } 
 
   if (isset($_GET['campos']))
     {
@@ -29,21 +34,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
       exit();
 	  }
   
-  if (isset($_GET['idProducto']))
+  /* if (isset($_GET['idProducto']))
     {
       $pro = new Productos($_GET['idProducto'],'', '','','','','','','','','','');
       $dato = $pro->buscarProductos($base->link);
       header("HTTP/1.1 200 OK");
       echo json_encode($dato);
       exit();
-	  }
-    else {
-      $dato = Productos::getAll($base->link);
-      $dato->setFetchMode(PDO::FETCH_ASSOC);
-      header("HTTP/1.1 200 OK");
-      echo json_encode($dato->fetchAll());
-      exit();
-	}    
+	  } */    
 }
 
 // Crear un nuevo post

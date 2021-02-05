@@ -71,8 +71,8 @@ class Productos {
  				die();
  			}
 		}
-
-		function buscarProductos ($link) {
+		
+		/* function buscarProductos ($link) {
 			try{
 				$consulta="SELECT * FROM productos where idProducto='$this->idProducto'";
 				$result=$link->prepare($consulta);
@@ -84,7 +84,7 @@ class Productos {
  				return $dato;
  				die();
  			}
-		}
+		} */
 
 		function insertarProductos ($link) {
 			try {
