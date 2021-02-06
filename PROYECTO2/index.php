@@ -15,3 +15,13 @@ if (isset($_POST['enviar'])) {
 }else{	
 	require "vistas/formularioProducto.php";
 }
+
+if (isset($_POST['enviarApi'])){	// iomn3Noi45S49wvo
+	$url="https://losprecios.co/producto/detalles?ID=".urlencode($_POST['id'])."&ClaveAPI=iomn3Noi45S49wvo";
+	$datos=json_decode(file_get_contents($url), true);
+	
+	if($datos['ErrorID'] == 0) {
+		require ("vistas/verProducto.php");
+	} else echo "el ID de Producto no existe o está vacio";
+	require ("vistas/enlace.php");
+}else require ("vistas/formularioApi.php");

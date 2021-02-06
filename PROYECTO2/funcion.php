@@ -32,3 +32,4 @@ function listar($link, $url){
   require "vistas/mensaje.php";
   return $contenido;
 }
+
