@@ -4,21 +4,23 @@ include "modelo.php";
 
 $base= new Bd();
 
-/*
-  listar todos los posts o solo uno
- */
+
 if ($_SERVER['REQUEST_METHOD'] == 'GET')
 {
-    if (isset($_GET['idPedido']))
+  if ((isset($_GET['idPedido'])) && (isset($_GET['nlinea'])))
     {
-      //Mostrar un post
+      $lineas= new lineasPedido($_GET['idPedido'],$_GET['nlinea'],'','',);
+      $dato=$lineas->buscarLineasPedido($base->link);
+      header("HTTP/1.1 200 OK");
+      echo json_encode($dato);
+      exit();
+	  }  else if (isset($_GET['idPedido'])) {
       $lineas= new lineasPedido($_GET['idPedido'],'','','',);
       $dato=$lineas->listarLineasPedido($base->link);
       header("HTTP/1.1 200 OK");
       echo json_encode($dato);
       exit();
-	  }
-    else {
+	  } else {
       $dato=lineasPedido::getAll($base->link);    
       $dato->setFetchMode(PDO::FETCH_ASSOC);
       header("HTTP/1.1 200 OK");
