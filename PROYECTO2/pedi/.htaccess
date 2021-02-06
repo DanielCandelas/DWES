@@ -1,5 +1,6 @@
 RewriteEngine on
 RewriteRule ^pedido$ pedido.php
-RewriteRule ^cliente/(.+)/(.+)/(.+)/(.+)/(.+)$ cliente.php?dniCliente=$1&$2=$3&$4=$5
-RewriteRule ^cliente/(.+)$ cliente.php?dniCliente=$1
+RewriteRule ^pedido/(.+)/(.+)/(.+)/(.+)/(.+)$ pedido.php?idPedido=$1&$2=$3&$4=$5
+RewriteRule ^pedido/(.+)/(.+)/(.+)$ pedido.php?idPedido=$1&$2=$3
+RewriteRule ^pedido/(.+)$ pedido.php?idPedido=$1
 
