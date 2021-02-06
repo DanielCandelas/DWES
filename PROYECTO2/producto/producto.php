@@ -9,7 +9,7 @@ $base= new Bd();
 if ($_SERVER['REQUEST_METHOD'] == 'GET')
 {      
   $campo = getUrl($_GET);
-//Variables de sesion pasar a controlador url
+
   if (isset($_GET['campos']))
     {
       $pro = new Productos('','','','','','','','','','','','');
