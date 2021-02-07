@@ -1,17 +1,22 @@
 <?php
 
-foreach ($datos as $productos) {  
-    foreach ($productos as $producto) {   
-        foreach ($producto as $informacion) {
-            echo "Nombre: ".$informacion['Producto']."<br>";
-            echo "ID: ".$informacion['ID']."<br>";
-            echo "Marca: ".$informacion['Marca']."<br>";
-            echo "Tamaño: ".$informacion['Tamaño']."<br>";
-            echo "<hr>";
-        }         
-    }             
-} 
-  
+foreach ($datos as $key => $value) {    
+    if ($key == 'Datos'){
+        foreach ($value as $key => $value) { 
+            if ($key == 'Ítems') {
+                foreach ($value as $informacion) {
+                    $dato = "<br>";
+                    $dato.= "Nombre: ".$informacion['Producto']."<br>";
+                    $dato.= "ID: ".$informacion['ID']."<br>";
+                    $dato.= "Marca: ".$informacion['Marca']."<br>";
+                    $dato.= "Tamaño: ".$informacion['Tamaño']."<br>";
+                    $dato.= "<hr>";
+                    require "vistas/mensaje.php";
+                }  
+            }   
+        } 
+    }            
+}  
   
 		
 ?>
