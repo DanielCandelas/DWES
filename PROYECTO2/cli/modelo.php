@@ -100,18 +100,6 @@ class Cliente {
  				die();
  			}
 		}
-		
-		function modificar ($link){
-			try{
-				$consulta="UPDATE clientes SET nombre='$this->nombre',  direccion='$this->direccion',  email='$this->email', pwd='$this->pwd' WHERE dniCliente='$this->dniCliente'";
-				$result=$link->prepare($consulta);
-				return $result->execute();
-			} catch(PDOException $e){
-				$dato= "¡Error!: " . $e->getMessage() . "<br/>";
- 				return $dato;
- 				die();
- 			}
-		}
 
 		function modificarParcial ($link,$input){
 			try{

@@ -50,11 +50,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 //Borrar
 if ($_SERVER['REQUEST_METHOD'] == 'DELETE')
 {
-	$idProducto = $_GET['idProducto'];
-  $pro = new Productos($idProducto,'','','','','','','','','','','');
+  $pro = new Productos($_GET['idProducto'],'','','','','','','','','','','');
   if($dato=$pro->borrarProductos($base->link)){
 	  header("HTTP/1.1 200 OK");
-   	echo json_encode($idProducto);
+   	echo json_encode($_GET['idProducto']);
 	  exit();
   }
 }

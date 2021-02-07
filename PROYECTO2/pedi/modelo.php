@@ -108,18 +108,6 @@ class Pedidos {
 			 die();
 		 }
 	}
-	
-	function modificarPedido ($link){
-		try{
-			$consulta = "UPDATE pedidos SET fecha='$this->fecha', dniCliente='$this->dniCliente' WHERE idPedido='$this->idPedido'";
-			$result=$link->prepare($consulta);
-			return $result->execute();
-		} catch(PDOException $e) {
-			$dato= "¡Error!: " . $e->getMessage() . "<br/>";
-			return $dato;
-			die();
-		}
-	}
 
 	function modificarPedidoParcial ($link,$input){
 		try{

@@ -72,7 +72,7 @@ class Productos {
  			}
 		}
 		
-		/* function buscarProductos ($link) {
+		function buscarProductos ($link) {
 			try{
 				$consulta="SELECT * FROM productos where idProducto='$this->idProducto'";
 				$result=$link->prepare($consulta);
@@ -84,7 +84,7 @@ class Productos {
  				return $dato;
  				die();
  			}
-		} */
+		} 
 
 		function insertarProductos ($link) {
 			try {
@@ -122,18 +122,6 @@ class Productos {
 		function borrarProductos ($link){
 			try{
 				$consulta="DELETE FROM productos where idProducto='$this->idProducto'";
-				$result=$link->prepare($consulta);
-				return $result->execute();
-			} catch(PDOException $e){
-				$dato= "¡Error!: " . $e->getMessage() . "<br/>";
- 				return $dato;
- 				die();
- 			}
-		}
-		
-		function modificarProductos ($link){
-			try{
-				$consulta="UPDATE productos SET nombre='$this->nombre', origen='$this->origen', foto='$this->foto', marca='$this->marca', categoria='$this->categoria', peso='$this->peso, unidades='$this->unidades, volumen='$this->volumen, precio='$this->precio WHERE idProducto='$this->idProducto'";
 				$result=$link->prepare($consulta);
 				return $result->execute();
 			} catch(PDOException $e){

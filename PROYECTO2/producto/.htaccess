@@ -1,5 +1,15 @@
 RewriteEngine on
 RewriteRule ^producto$ producto.php
+RewriteRule ^producto/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)$ producto.php?idProducto=$1&$2=$3&$4=$5&$6=$7&$8=$9&$10=$11&$12=$13&$14=$15&$16=$17&$18=$19
+RewriteRule ^producto/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)$ producto.php?idProducto=$1&$2=$3&$4=$5&$6=$7&$8=$9&$10=$11&$12=$13&$14=$15&$16=$17
+RewriteRule ^producto/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)$ producto.php?idProducto=$1&$2=$3&$4=$5&$6=$7&$8=$9&$10=$11&$12=$13&$14=$15
+RewriteRule ^producto/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)$ producto.php?idProducto=$1&$2=$3&$4=$5&$6=$7&$8=$9&$10=$11&$12=$13
+RewriteRule ^producto/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)$ producto.php?idProducto=$1&$2=$3&$4=$5&$6=$7&$8=$9&$10=$11
+RewriteRule ^producto/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)$ producto.php?idProducto=$1&$2=$3&$4=$5&$6=$7&$8=$9
+RewriteRule ^producto/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)$ producto.php?idProducto=$1&$2=$3&$4=$5&$6=$7
+RewriteRule ^producto/(.+)/(.+)/(.+)/(.+)/(.+)$ producto.php?idProducto=$1&$2=$3&$4=$5
+RewriteRule ^producto/(.+)/(.+)/(.+)$ producto.php?idProducto=$1&$2=$3
 RewriteRule ^producto/(.+)/(.+)$ producto.php?$1=$2
+RewriteRule ^producto/([0-9]+)$ producto.php?idProducto=$1
 RewriteRule ^producto/(.+)$ producto.php?$1=campos
 
