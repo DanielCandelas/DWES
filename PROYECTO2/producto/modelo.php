@@ -186,6 +186,7 @@ class Productos {
 				$result->execute();
 				$result->setFetchMode(PDO::FETCH_ASSOC);
 				return $result->fetchAll();
+				//return $result;
 			}
 			catch(PDOException $e){
 				$dato= "¡Error!: " . $e->getMessage() . "<br/>";
