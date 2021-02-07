@@ -22,6 +22,9 @@ if (isset($_POST['enviarApi'])){	// iomn3Noi45S49wvo
 	
 	if($datos['ErrorID'] == 0) {
 		require ("vistas/verProducto.php");
-	} else echo "el ID de Producto no existe o está vacio";
+	} else {
+		$dato = "El ID de Producto no existe";
+		require "vistas/mensaje.php";
+	}
 	require ("vistas/enlace.php");
 }else require ("vistas/formularioApi.php");
