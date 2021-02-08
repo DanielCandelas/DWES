@@ -1,18 +1,19 @@
 <?php
 
+header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+
 include "utils.php";
 include "modelo.php";
 
 $base= new Bd();
 
-/*
-  listar todos los posts o solo uno
- */
 if ($_SERVER['REQUEST_METHOD'] == 'GET')
 {
     if (isset($_GET['dniCliente'])) 
     {
-      //Mostrar un post
+      //Muestra un cliente
       $cli= new Cliente($_GET['dniCliente'],'','','','');
       $dato=$cli->buscar($base->link);
       header("HTTP/1.1 200 OK");
@@ -20,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
       exit();
 	  }
     else {
-      //Mostrar lista de post
+      //Muestra todos los clientes
       $dato=Cliente::getAll($base->link);
       $dato->setFetchMode(PDO::FETCH_ASSOC);
       header("HTTP/1.1 200 OK");
@@ -29,34 +30,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
 	}
 }
 
-// Crear un nuevo post
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
+    // Crea un nuevo cliente
     $cli = new Cliente($_POST['dniCliente'],$_POST['nombre'],$_POST['direccion'],$_POST['email'],$_POST['pwd']);
     if(!$cli->buscar($base->link)){
       $cli->insertar($base->link);
       header("HTTP/1.1 200 OK");
       echo json_encode($_POST['dniCliente']);
       exit();
-	 }
+	  }
 }
 
-//Borrar
+
 if ($_SERVER['REQUEST_METHOD'] == 'DELETE')
 {
+  //Borrar un Cliente
 	$dniCliente = $_GET['dniCliente'];
   $cli= new Cliente($dniCliente,'','','','');
   if($dato=$cli->borrar($base->link)){
-	 header("HTTP/1.1 200 OK");
-   	 echo json_encode($dniCliente);
-	 exit();
+	  header("HTTP/1.1 200 OK");
+   	echo json_encode($dniCliente);
+	exit();
   }
 }
 
-//Actualizar
+
 if ($_SERVER['REQUEST_METHOD'] == 'PUT')
 {
-
+  //Actualiza un cliente
   if(isset($_GET['dniCliente'])){
     $input = $_GET;
     $cli= new Cliente($_GET['dniCliente'],'','','','');
@@ -68,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT')
 }
 
 
-//En caso de que ninguna de las opciones anteriores se haya ejecutado
+//En caso de que ninguna de las opciones anteriores se haya ejecutado devolvemos error
 header("HTTP/1.1 400 Bad Request");
 
 ?>

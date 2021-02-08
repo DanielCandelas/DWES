@@ -1,18 +1,20 @@
 <?php
 
+header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+
 include "utils.php";
 include "modelo.php";
 
 $base = new Bd();
 
-/*
-  listar todos los posts o solo uno
- */
+
 if ($_SERVER['REQUEST_METHOD'] == 'GET')
 {
     if (isset($_GET['idPedido']))
     {
-      //Mostrar un post
+      //Mostrar un Pedido
       $pedido = new Pedidos($_GET['idPedido'], '','');
       $dato = $pedido->buscarPedidos($base->link);
       header("HTTP/1.1 200 OK");
@@ -20,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
       exit();
 	  }
     else {
-      //Mostrar lista de post
+      //Mostrar todos los Pedidos
       $dato = Pedidos::getAll($base->link);
       $dato->setFetchMode(PDO::FETCH_ASSOC);
       header("HTTP/1.1 200 OK");
@@ -29,9 +31,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
 	}
 }
 
-// Crear un nuevo post
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
+    // Crear un nuevo Pedido
     $pedido = new Pedidos('',$_POST['fecha'],$_POST['dniCliente']);
     $pedido->idPedido=$pedido->calcularIdPedido($base->link);
     if(!$pedido->buscarPedidos($base->link)){
@@ -39,33 +42,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
       header("HTTP/1.1 200 OK");
       echo json_encode($pedido->idPedido);
       exit();
-	 }
+	  }
 }
 
-//Borrar
+
 if ($_SERVER['REQUEST_METHOD'] == 'DELETE')
 {
-	$idPedido = $_GET['idPedido'];
-  $pedido = new Pedidos($idPedido,'','');
-  if($dato=$pedido->borrarPedido($base->link)){
-	  header("HTTP/1.1 200 OK");
-   	echo json_encode($idPedido);
-	  exit();
-  }
+    //Borra un Pedido
+    $idPedido = $_GET['idPedido'];
+    $pedido = new Pedidos($idPedido,'','');
+    if($dato=$pedido->borrarPedido($base->link)){
+      header("HTTP/1.1 200 OK");
+      echo json_encode($idPedido);
+      exit();
+    }
 }
 
-//Actualizar
+
 if ($_SERVER['REQUEST_METHOD'] == 'PUT')
 {
-
-  if(isset($_GET['idPedido'])){
-    $input = $_GET;
-    $pedido= new Pedidos($_GET['idPedido'],'','');
-    $error=$pedido->modificarPedidoParcial($base->link,$input);
-    header("HTTP/1.1 200 OK");
-    echo $_GET['idPedido'];
-    exit();
-  }
+    //Actualiza un Pedido
+    if(isset($_GET['idPedido'])){
+      $input = $_GET;
+      $pedido= new Pedidos($_GET['idPedido'],'','');
+      $error=$pedido->modificarPedidoParcial($base->link,$input);
+      header("HTTP/1.1 200 OK");
+      echo $_GET['idPedido'];
+      exit();
+    }
 }
 
 
