@@ -5,6 +5,7 @@ header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Conte
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 
 include "modelo.php";
+include "utils.php";
 
 $base= new Bd();
 
@@ -66,10 +67,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT')
     //Actualiza una linea pedido
     if((isset($_GET['idPedido'])) && (isset($_GET['nlinea']))){
       $input = $_GET;
-      $lineas= new lineasPedido($_GET['idPedido'],$_GET['idPedido'],'','',);
+      $lineas= new lineasPedido($_GET['idPedido'],$_GET['nlinea'],'','',);
       $error=$lineas->modificarLineaPedidoParcial($base->link,$input);
       header("HTTP/1.1 200 OK");
-      echo json_encode($_GET['idPedido']." - ".$_GET['idPedido']);
+      //echo json_encode($input);
+      echo json_encode($_GET['idPedido']." - ".$_GET['nlinea']);
       exit();
     }
 }
