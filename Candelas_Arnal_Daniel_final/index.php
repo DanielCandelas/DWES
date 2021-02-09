@@ -7,8 +7,8 @@ $base= new Bd();
 
 if (isset($_POST['enviar'])) {
 
-	if (!listar($base->link, 'http://localhost/Candelas_Arnal_Daniel_final/producto/producto/'.$_POST['productos'].'/'.rawurlencode($_POST['valor']))) {
-		$dato = "Los datos introducidos no corresponden con ninguno de nuestros productos";
+	if (!listar($base->link, 'http://localhost/DWES-2021/Candelas_Arnal_Daniel_final/producto/producto/'.$_POST['productos'].'/'.rawurlencode($_POST['valor']))) {
+		$dato = "Los datos introducidos no corresponden con ninguno de nuestros productos o el campo del valor esta vacio";
 		require "vistas/mensaje.php";
 	} 	
 	require "vistas/enlace.php";
