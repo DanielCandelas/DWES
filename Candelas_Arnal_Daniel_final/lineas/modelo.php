@@ -107,6 +107,24 @@ class lineasPedido{
 		return $result; */
 	}	
 
+	function modificarLineaPedidoParcial ($link,$input){
+		try{
+			$fields = getParams($input);
+			$consulta = "
+			  UPDATE lineaspedidos
+			  SET $fields
+			  WHERE idPedido='$this->idPedido' AND nlinea='$this->nlinea'";
+			  $result=$link->prepare($consulta);
+			bindAllValues($result,$input);
+			$result->execute();
+			return $result;
+		} catch(PDOException $e){
+			$dato= "¡Error!: " . $e->getMessage() . "<br/>";
+			return $dato;
+			die();
+		}
+	}
+
 	function borrarLineaPedido($link){ 		
 		try{
 			$consulta = "DELETE FROM lineaspedidos where idPedido='$this->idPedido' AND nlinea='$this->nlinea'";

@@ -61,6 +61,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'DELETE')
   }
 }
 
+if ($_SERVER['REQUEST_METHOD'] == 'PUT')
+{
+    //Actualiza una linea pedido
+    if((isset($_GET['idPedido'])) && (isset($_GET['nlinea']))){
+      $input = $_GET;
+      $lineas= new lineasPedido($_GET['idPedido'],$_GET['idPedido'],'','',);
+      $error=$lineas->modificarLineaPedidoParcial($base->link,$input);
+      header("HTTP/1.1 200 OK");
+      echo json_encode($_GET['idPedido']." - ".$_GET['idPedido']);
+      exit();
+    }
+}
+
 //En caso de que ninguna de las opciones anteriores se haya ejecutado
 header("HTTP/1.1 400 Bad Request");
 
