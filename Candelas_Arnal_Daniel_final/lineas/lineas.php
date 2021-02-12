@@ -52,14 +52,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
 if ($_SERVER['REQUEST_METHOD'] == 'DELETE')
 {
-  //Borra una linea de pedido
-  $idPedido = $_GET['idPedido'];
-  $lineas= new lineasPedido($_GET['idPedido'],$_GET['nlinea'],'','',);
-  if($dato=$lineas->borrarLineaPedido($base->link)){
-	  header("HTTP/1.1 200 OK");
-   	echo json_encode($idPedido);
-	  exit();
-  }
+    //Borra una linea de pedido
+    if ((isset($_GET['idPedido'])) && (isset($_GET['nlinea']))) //Busca una linea
+    {
+      $lineas= new lineasPedido($_GET['idPedido'],$_GET['nlinea'],'','',);
+      $dato=$lineas->borrarLineaPedido($base->link);
+      header("HTTP/1.1 200 OK");
+      echo json_encode($dato);
+      exit();
+	  } else if (isset($_GET['idPedido'])){
+      $lineas= new lineasPedido($_GET['idPedido'],'','','',);
+      if($dato=$lineas->borrarLineasPedido($base->link)){
+        header("HTTP/1.1 200 OK");
+        echo json_encode($_GET['idPedido']);
+        exit();
+      }
+    }
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'PUT')

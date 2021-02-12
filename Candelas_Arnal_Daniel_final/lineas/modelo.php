@@ -137,6 +137,18 @@ class lineasPedido{
 		 }
 	}	
 
+	function borrarLineasPedido($link){ 		
+		try{
+			$consulta = "DELETE FROM lineaspedidos where idPedido='$this->idPedido'";
+			$result=$link->prepare($consulta);
+			return $result->execute();
+		} catch(PDOException $e){+
+			$dato= "¡Error!: " . $e->getMessage() . "<br/>";
+			 return $dato;
+			 die();
+		 }
+	}
+
 	function calcular_nLinea($link){
         try{
             $consulta="SELECT Max(nlinea) as nlinea FROM lineaspedidos where idPedido='$this->idPedido'";

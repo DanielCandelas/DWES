@@ -22,7 +22,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
       echo json_encode($dato);
       exit();
 	  } else if(isset($_GET[$campo])){
-        //$input = $_GET;
         $pro = new Productos('','','','','','','','','','','','');
         $dato=$pro->campoValor($base->link,$_GET);
         header("HTTP/1.1 200 OK");
