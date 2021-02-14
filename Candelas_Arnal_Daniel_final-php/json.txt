@@ -1,0 +1,78 @@
+{
+"Resultado":"Ok",
+"Datos":
+	{"ID":846,
+	"Nombre":"Leche Pasteurizada Entera",
+	"Unidad":"ml",
+	"Descripción":null,
+	"Complemento":null,
+	"NombrePorción":"Vaso",
+	"TamañoPorción":240.000,
+	"TamañoPresentaciónTípica":1000.000,
+	"NombrePresentaciónTípica":"Bolsa",
+	"RutaImagen":"https://vixark.b-cdn.net/lp-i-p-g/imagen-no-disponible.jpg",
+	"Ítems":
+		[{
+		"ID":9408,
+		"Producto":"Leche Pasteurizada Entera",
+		"ProductoID":846,
+		"Marca":"Latti",
+		"Tamaño":1000.000,
+		"Unidad":"ml",
+		"Complemento":null,
+		"RutaImagen":"https://vixark.b-cdn.net/lp-i-i-g/imagen-no-disponible.jpg",
+		"CódigoEAN13":"1014017006954",
+		"ÍtemsTiendas":
+			[{
+			"Tienda":"D1",
+			"TiendaID":1,
+			"Precio":1690.0000,
+			"Fecha":"2020-01-11",
+			"Ítem":null
+			}]
+		},
+		{
+		"ID":4278,
+		"Producto":"Leche Pasteurizada Entera",
+		"ProductoID":846,
+		"Marca":"Colanta",
+		"Tamaño":5400.000,
+		"Unidad":"ml",
+		"Complemento":null,
+		"RutaImagen":"https://vixark.b-cdn.net/lp-i-i-g/leche-pasteurizada-entera-colanta-5400ml.jpg",
+		"CódigoEAN13":"7702129003636",
+		"ÍtemsTiendas":
+			[{
+			"Tienda":"Éxito",
+			"TiendaID":6,
+			"Precio":11360.0000,
+			"Fecha":"2020-07-24",
+			"Ítem":null
+			}]
+		},
+		{
+		"ID":4280,
+		"Producto":"Leche Pasteurizada Entera",
+		"ProductoID":846,
+		"Marca":"Colanta",
+		"Tamaño":1000.000,
+		"Unidad":"ml",
+		"Complemento":null,
+		"RutaImagen":"https://vixark.b-cdn.net/lp-i-i-g/leche-pasteurizada-entera-colanta-1000ml.jpg",
+		"CódigoEAN13":"7702129001052",
+		"ÍtemsTiendas":
+			[{
+			"Tienda":"Éxito",
+			"TiendaID":6,
+			"Precio":2250.0000,
+			"Fecha":"2019-12-11",
+			"Ítem":null
+			}]
+		}],
+	"TotalÍtems":3,
+	"Categoría":"Bebidas",
+	"Subcategoría":"Lácteos"
+	},
+"ErrorID":0,
+"Mensaje":null
+}

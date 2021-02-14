@@ -28,25 +28,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
 }
 
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST')  //https://www.geeksforgeeks.org/how-to-receive-json-post-with-php/
+if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
-    if(isset($_POST['dniCliente'])){
-      $cli = new Cliente($_POST['dniCliente'],$_POST['nombre'],$_POST['direccion'],$_POST['email'],$_POST['pwd']);
-      if(!$cli->buscar($base->link)){
-        $cli->insertar($base->link);
-        header("HTTP/1.1 200 OK");
-        echo json_encode($_POST['dniCliente']);
-        exit();
-      }
-    } else {
-      // Crea un nuevo cliente
-    $json = file_get_contents('php://input');
-    // Converts it into a PHP object
-    $data = json_decode($json);
-    foreach($data as $key => $value){
-        $_POST[$key] = $value;
-    }
-
+    // Crea un nuevo cliente
     $cli = new Cliente($_POST['dniCliente'],$_POST['nombre'],$_POST['direccion'],$_POST['email'],$_POST['pwd']);
     if(!$cli->buscar($base->link)){
       $cli->insertar($base->link);
@@ -54,7 +38,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')  //https://www.geeksforgeeks.org/how-t
       echo json_encode($_POST['dniCliente']);
       exit();
 	  }
-    }
 }
 
 

@@ -17,43 +17,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
       header("HTTP/1.1 200 OK");
       echo json_encode($dato);
       exit();
-	  } else if(isset($_GET['id'])){
-        $pedido = new Pedidos('','','');
-        $number = $pedido->calcularIdPedido($base->link);      
-        header("HTTP/1.1 200 OK");
-        echo json_encode($number);
-        exit();      
-      } else {
-          //Mostrar todos los Pedidos
-          $dato = Pedidos::getAll($base->link);
-          $dato->setFetchMode(PDO::FETCH_ASSOC);
-          header("HTTP/1.1 200 OK");
-          echo json_encode($dato->fetchAll());
-          exit();
-        }
+	  }
+    else {
+      //Mostrar todos los Pedidos
+      $dato = Pedidos::getAll($base->link);
+      $dato->setFetchMode(PDO::FETCH_ASSOC);
+      header("HTTP/1.1 200 OK");
+      echo json_encode($dato->fetchAll());
+      exit();
+	}
 }
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
-  if(isset($_POST['dniCliente'])){
-    $pedido = new Pedidos('',$_POST['fecha'],$_POST['dniCliente']);
-    $pedido->idPedido=$pedido->calcularIdPedido($base->link);
-    if(!$pedido->buscarPedidos($base->link)){
-      $pedido->insertarPedido($base->link);
-      header("HTTP/1.1 200 OK");
-      echo json_encode($pedido->idPedido);
-      exit();
-    }
-  } else {
-    // Crea un nuevo cliente
-    $json = file_get_contents('php://input');
-    // Converts it into a PHP object
-    $data = json_decode($json);
-    foreach($data as $key => $value){
-        $_POST[$key] = $value;
-    }
-  
+    // Crear un nuevo Pedido
     $pedido = new Pedidos('',$_POST['fecha'],$_POST['dniCliente']);
     $pedido->idPedido=$pedido->calcularIdPedido($base->link);
     if(!$pedido->buscarPedidos($base->link)){
@@ -62,8 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
       echo json_encode($pedido->idPedido);
       exit();
 	  }
-  }
-  
 }
 
 

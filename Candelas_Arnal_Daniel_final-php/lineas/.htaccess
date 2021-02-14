@@ -1,0 +1,12 @@
+RewriteEngine on
+RewriteRule ^lineas$ lineas.php
+RewriteRule ^lineas/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)$ lineas.php?idPedido=$1&$2=$3&$4=$5&$6=$7
+RewriteRule ^lineas/(.+)/(.+)/(.+)/(.+)/(.+)/(.+)$ lineas.php?idPedido=$1&nlinea=$2&$3=$4&$5=$6
+RewriteRule ^lineas/(.+)/(.+)/(.+)/(.+)/(.+)$ lineas.php?idPedido=$1&$2=$3&$4=$5
+RewriteRule ^lineas/(.+)/(.+)/(.+)/(.+)$ lineas.php?idPedido=$1&nlinea=$2&$3=$4
+RewriteRule ^lineas/(.+)/(.+)/(.+)$ lineas.php?idPedido=$1&$2=$3
+RewriteRule ^lineas/(.+)/(.+)$ lineas.php?idPedido=$1&nlinea=$2  
+RewriteRule ^lineas/(.+)$ lineas.php?idPedido=$1
+
+
+

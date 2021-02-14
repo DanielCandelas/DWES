@@ -132,7 +132,7 @@ class Pedidos {
             $consulta="SELECT Max(idPedido) as idPedido FROM pedidos";
             $result=$link->prepare($consulta);
             $result->execute(); 
-            foreach ($result->fetch(PDO::FETCH_ASSOC) as $key => $value) {				
+            foreach ($result->fetch(PDO::FETCH_ASSOC) as $key => $value) {
                     return $value+1;
             }
         }

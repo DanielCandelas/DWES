@@ -16,11 +16,28 @@
 	function bindAllValues($statement, $params){
 
 		foreach($params as $param => $value) {
-				$statement->bindValue(':'.$param, $value);
+
+      if (startsWith($value, 'C')) {
+        $aux = explode(" ", $value);
+        $result = "";
+        foreach($aux as $value){
+          if ($value == "C") {
+            $result .= "C/";
+          } else {
+            $result.= " ".$value;
+          }
+        }
+        $value = $result;
+      }
+			$statement->bindValue(':'.$param, $value);
     }
     
 		return $statement;
   }
 
+  function startsWith ($string, $startString) { 
+    $len = strlen($startString); 
+    return (substr($string, 0, $len) === $startString); 
+  }
 
 ?>
